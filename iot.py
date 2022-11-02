@@ -15,7 +15,7 @@ while True:
     ultrasonic_distance = str(ultrasonic.distance)
     f.write(ultrasonic_distance + "\n")
     f.close()
-    time.sleep(1)
+    time.sleep(0.1)
     
 
         
