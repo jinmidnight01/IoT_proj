@@ -11,11 +11,11 @@ ultrasonic = bundle.ultrasonics[0]
 
 # 대상과의 거리를 측정한 값을 0 ~ 100 사이로 환산하여 반환합니다.
 while True:
-    f = open("C:/Users/vkstk/OneDrive/바탕 화면/IoT_proj/iot.txt", 'a')
+    f = open("IOT/iot.txt", 'a')
     ultrasonic_distance = str(ultrasonic.distance)
     f.write(ultrasonic_distance + "\n")
     f.close()
-    time.sleep(0.1)
+    time.sleep(1)
     
 
         

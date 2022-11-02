@@ -8,7 +8,7 @@
 </head>
 <body style="display:flex; flex-direction:column;">
     <h1 style="text-align:center;font-size:45px;">혼잡도</h1>
-    <<a href="{% url 'delete' %}"><button style="height:35px;font-size:20px;position:absolute; top:100px; left:800px;color:white;background-color:rgb(236, 101, 101);border-radius:7px;border:0;padding:3px 15px;">초기화</button></a>
+    <a href="{% url 'delete' %}"><button style="height:35px;font-size:20px;position:absolute; top:100px; left:800px;color:white;background-color:rgb(236, 101, 101);border-radius:7px;border:0;padding:3px 15px;">초기화</button></a>
     <div id="hi" style="min-height:100px; width: 50%;margin: 30px auto;border:3px solid purple;border-radius:5px; padding:15px 20px;">
         {% for iot in iot_set %}
             <span style="text-align:center; font-size:20px;">{{iot.num}}  </span>
