@@ -17,7 +17,7 @@ while True:
     now = str(datetime.datetime.now())
     f.write(now + ',' + ultrasonic_distance + "\n")
     f.close()
-    time.sleep(1)
+    time.sleep(0.1)
     
 
         
