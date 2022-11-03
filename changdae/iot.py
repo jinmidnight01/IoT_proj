@@ -15,8 +15,8 @@ ultrasonic = bundle.ultrasonics[0]
 data = []
 while True:
     ultrasonic_distance = float(ultrasonic.distance)
-    list.append(data)
-    time.sleep(0.1)
+    data.append(ultrasonic_distance)
+    time.sleep(0.5)
     plt.plot(data)
     plt.pause(0.001)
 plt.show()

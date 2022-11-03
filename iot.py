@@ -1,6 +1,7 @@
 import modi
 import time
 import datetime
+import matplotlib.pyplot as plt
 
 my_list = []
 
@@ -8,20 +9,25 @@ my_list = []
 bundle = modi.MODI()
 # 'ultrasonic'라는 변수에 모듈 객체를 저장합니다.
 ultrasonic = bundle.ultrasonics[0]
+# 'mic'라는 변수에 모듈 객체를 저장합니다.
 
+data = []
 
 # 대상과의 거리를 측정한 값을 0 ~ 100 사이로 환산하여 반환합니다.
 while True:
-    f = open("IOT/iot.csv", 'a')
+    f = open("7-5.csv", 'a')
     ultrasonic_distance = str(ultrasonic.distance)
+    print(ultrasonic_distance)
     now = str(datetime.datetime.now())
-    f.write(now + ',' + ultrasonic_distance + "\n")
+    f.write(now + ',' + ultrasonic_distance  + "\n")
     f.close()
-    time.sleep(0.1)
-    
+    data.append(ultrasonic.distance)
+    plt.plot(data)
+    plt.pause(0.001)
+plt.show()
 
-        
-    
+
+
 
 
 
