@@ -1,5 +1,6 @@
 import modi
 import time
+import datetime
 
 my_list = []
 
@@ -11,11 +12,12 @@ ultrasonic = bundle.ultrasonics[0]
 
 # 대상과의 거리를 측정한 값을 0 ~ 100 사이로 환산하여 반환합니다.
 while True:
-    f = open("IOT/iot.txt", 'a')
+    f = open("IOT/iot.csv", 'a')
     ultrasonic_distance = str(ultrasonic.distance)
-    f.write(ultrasonic_distance + "\n")
+    now = str(datetime.datetime.now())
+    f.write(now + ',' + ultrasonic_distance + "\n")
     f.close()
-    time.sleep(0.1)
+    time.sleep(1)
     
 
         

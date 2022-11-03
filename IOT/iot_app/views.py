@@ -7,23 +7,26 @@ import os
 
 def home(request):
     
-    if os.path.isfile("iot.txt"):
+    if os.path.isfile("iot.csv"):
         lst = []
+        t = []
 
-        f = open("iot.txt", 'r')
+        f = open("iot.csv", 'r')
 
         while True:
             line_data = f.readline().strip()
             if line_data == '':
                 break
-            lst.append(float(line_data))
+            info = line_data.split(',')
+            t.append(info[0])
+            lst.append(float(info[1]))
 
         for i in range(0, len(lst)):
-            iot = Congression(num = lst[i])
+            iot = Congression(num = lst[i], created_at = t[i])
             iot.save()
         
         f.close()
-        os.remove("iot.txt")
+        os.remove("iot.csv")
         
     iot_set = Congression.objects.all().order_by('-created_at')
 
@@ -32,7 +35,7 @@ def home(request):
 def delete(request):
     Congression.objects.all().delete()
 
-    if os.path.isfile("iot.txt"):
-        os.remove("iot.txt")
+    if os.path.isfile("iot.csv"):
+        os.remove("iot.csv")
 
     return redirect('home')
