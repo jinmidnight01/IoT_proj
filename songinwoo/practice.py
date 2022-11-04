@@ -1,7 +1,7 @@
-import modi
 import time
 import pickle
-import matplotlib.pyplot as plt
+import modi
+#import matplotlib.pyplot as plt
 
 # MODI 모듈의 번들을 연결하기 위해, MODI 객체를 인스턴스화합니다.
 bundle = modi.MODI()
