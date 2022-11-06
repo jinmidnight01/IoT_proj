@@ -1,4 +1,8 @@
-a=[370,370,370,370,370,370,370,370,370,370,350,330,305,310,250,225,230,180,150,220,280,350,370,370,370,370,370,370,370,370,370,250,220,180,150,170,190,210,230,250,270,290,310,350,370,370,370,370]
+import pandas as pd
+df=pd.read_csv("5-1.csv", sep=",")
+a=df.iloc[:,1]
+a=list(a)
+print(a)
 num_inout=[]
 num_decrease=0
 num_increase=0
@@ -12,15 +16,20 @@ print(alen)
 
 
 for i in range(alen-1):
-    if a[i]-a[i+1]>10:
+    if i<10:
+        continue
+
+    if a[i]-a[i+1]>=2:
         num_decrease+=1
-    if a[i]-a[i+1]<-10:
+        break_count=0
+    if a[i]-a[i+1]<=-2:
         num_increase+=1
+        break_count=0
     
 
     if abs(a[i]-a[i+1])<2:
         break_count+=1
-    print(num_decrease,num_increase,break_count)
+    #print(num_decrease,num_increase,break_count)
 
     if break_count>3:
         if num_decrease>num_increase:
@@ -43,4 +52,3 @@ for i in range(alen-1):
     num_inout.append(num_sign)
 
 print(num_inout)
-
