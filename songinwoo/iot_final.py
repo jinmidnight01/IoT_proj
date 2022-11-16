@@ -1,6 +1,10 @@
 import time
 import pickle
 import modi
+import modi
+import time
+import datetime
+import matplotlib.pyplot as plt
 #import matplotlib.pyplot as plt
 
 # MODI 모듈의 번들을 연결하기 위해, MODI 객체를 인스턴스화합니다.
@@ -21,11 +25,12 @@ small_gradient4=0
 small_gradient5=0
 break_count=0
 i=-1
+data = []
 
 while 1:
     time.sleep(0.05)
     ultrasonic_distance = ultrasonic.distance
-    print('ultrasonic_distance:', ultrasonic_distance)
+    #print('ultrasonic_distance:', ultrasonic_distance)
     a.append(ultrasonic_distance)
     i+=1
     print(num_sign)
@@ -148,3 +153,7 @@ while 1:
             small_gradient5=0
 
     num_inout.append(num_sign)
+    data.append(num_sign)
+    plt.plot(data)
+    plt.pause(0.001)
+plt.show()
