@@ -20,13 +20,16 @@ small_gradient3=0
 small_gradient4=0
 small_gradient5=0
 break_count=0
-i=0
+i=-1
 
 while 1:
+    time.sleep(0.05)
     ultrasonic_distance = ultrasonic.distance
     print('ultrasonic_distance:', ultrasonic_distance)
-    a.append(tuple(ultrasonic_distance))
-    if i<10:
+    a.append(ultrasonic_distance)
+    i+=1
+    print(num_sign)
+    if i<30:
         num_inout.append(num_sign)
         continue
 
@@ -145,8 +148,3 @@ while 1:
             small_gradient5=0
 
     num_inout.append(num_sign)
-    i+=1
-    print(num_sign)
-
-    
-#print(num_inout)    
