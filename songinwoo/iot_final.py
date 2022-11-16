@@ -1,8 +1,6 @@
 import time
 import pickle
 import modi
-import modi
-import time
 import datetime
 import matplotlib.pyplot as plt
 #import matplotlib.pyplot as plt
@@ -153,7 +151,5 @@ while 1:
             small_gradient5=0
 
     num_inout.append(num_sign)
-    data.append(num_sign)
-    plt.plot(data)
-    plt.pause(0.001)
-plt.show()
+
+

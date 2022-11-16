@@ -21,16 +21,20 @@ def home(request):
             t.append(info[0])
             lst.append(float(info[1]))
 
-        for i in range(0, len(lst)):
-            iot = Congression(num = lst[i], created_at = t[i])
-            iot.save()
+        #for i in range(0, len(lst)):
+            # iot = Congression(num = lst[i], created_at = t[i])
+            # iot.save()
+            
+        iot = Congression(num = lst[-1], created_at = t[-1])
+        iot.save()
+        
         
         f.close()
         os.remove("iot.csv")
         
-    iot_set = Congression.objects.all().order_by('-created_at')
+    iot_first = Congression.objects.all().order_by('-created_at').first()
 
-    return render(request, 'home.html', {'iot_set':iot_set})
+    return render(request, 'home.html', {'iot_first':iot_first})
 
 def delete(request):
     Congression.objects.all().delete()
