@@ -28,6 +28,8 @@ while True:
     a.append(ultrasonic_distance)
     i+=1
     print(num_sign)
+    if i<30:
+        continue
     
     # 파일 생성
     f = open("IOT/iot.csv", 'a')

@@ -31,6 +31,9 @@ while 1:
     #print('ultrasonic_distance:', ultrasonic_distance)
     a.append(ultrasonic_distance)
     i+=1
+    if num_sign<0:
+        num_sign=0
+        
     print(num_sign)
     if i<30:
         num_inout.append(num_sign)

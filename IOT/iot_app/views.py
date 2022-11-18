@@ -20,11 +20,7 @@ def home(request):
             info = line_data.split(',')
             t.append(info[0])
             lst.append(float(info[1]))
-
-        #for i in range(0, len(lst)):
-            # iot = Congression(num = lst[i], created_at = t[i])
-            # iot.save()
-            
+                    
         iot = Congression(num = lst[-1], created_at = t[-1])
         iot.save()
         
