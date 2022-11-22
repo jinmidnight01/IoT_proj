@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from .models import *
 import os
 
-
 # Create your views here.
 
 def home(request):
+    return render(request, 'home.html')
+
+def congression(request):
     
     if os.path.isfile("iot.csv"):
         lst = []
@@ -30,7 +32,7 @@ def home(request):
         
     iot_first = Congression.objects.all().order_by('-created_at').first()
 
-    return render(request, 'home.html', {'iot_first':iot_first})
+    return render(request, 'congression.html', {'iot_first':iot_first})
 
 def delete(request):
     Congression.objects.all().delete()
@@ -38,4 +40,10 @@ def delete(request):
     if os.path.isfile("iot.csv"):
         os.remove("iot.csv")
 
-    return redirect('home')
+    return redirect('congression')
+
+def kaist(request):
+    return render(request, 'kaist.html')
+
+def seoul(request):
+    return render(request, 'seoul.html')

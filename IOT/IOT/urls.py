@@ -20,5 +20,8 @@ from iot_app.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('congression/', congression, name='congression'),
     path('delete/', delete, name='delete'),
+    path('seoul/', seoul, name="seoul"),
+    path('kaist/', kaist, name='kaist'),
 ]

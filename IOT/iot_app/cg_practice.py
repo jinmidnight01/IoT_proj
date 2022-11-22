@@ -27,6 +27,9 @@ while True:
     ultrasonic_distance = ultrasonic.distance
     a.append(ultrasonic_distance)
     i+=1
+    if num_sign<0:
+        num_sign=0
+
     print(num_sign)
     if i<30:
         continue
