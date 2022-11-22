@@ -128,7 +128,7 @@
         }
         #title1, #title2, #title3 {
             margin: auto 0;
-            margin-left:64px;
+            margin-left:55px;
             padding-bottom:3px;
             
             font-family: 'Lora';
@@ -161,12 +161,21 @@
                 </span>
                 </a>
             </div>
-            <a href="{% url 'home' %}" style="display:flex;width:36px;margin-right:15px;">
-                <img id="logo1" style="margin:auto 0;" src="{% static 'yonseilogo.png' %}" width="40px" height="38px">
-                <img id="logo2" style="margin:auto 0;" src="{% static 'seoul.png' %}" width="40px" height="38px">
-                <img id="logo3" style="margin:auto 0;" src="{% static 'kaist.png' %}" width="40px" height="38px">
-
-            </a>    
+            <div id="logo1">
+                <a href="{% url 'home' %}" style="margin:auto 0;">
+                    <img src="{% static 'yonseilogo.png' %}" width="40px" height="38px">
+                </a>    
+            </div>
+            <div id="logo2">
+                <a href="{% url 'seoul' %}" style="margin:auto 0;">
+                    <img style="margin:auto 0;" src="{% static 'seoul.png' %}" width="40px" height="38px">
+                </a>    
+            </div>
+            <div id="logo3">
+                <a href="{% url 'kaist' %}" style="margin:auto 0;">
+                    <img style="margin:auto 0;" src="{% static 'kaist.png' %}" width="40px" height="38px">
+                </a>    
+            </div>
         </header>
     </div>
 
