@@ -3,51 +3,191 @@
 {% block content %}
 
 <style>
-    a {text-decoration:none;}
-    a:hover {text-decoration:inherit;}
-    a:active {text-decoration:inherit;}
-    #overlay-home {
-        color: #A278F4;
+    #subtitle_con {
+
+        font-family: 'Lora';
+        font-style: normal;
+        font-size: 14px;
+        /* identical to box height */
+
+        color: #747D88;
     }
-    #title2, #title3, #logo2, #logo3 {
-        display: none;
+
+    #title_con {
+        font-family: 'Lora';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 32px;
+        /* identical to box height */
+        margin-bottom:5px;
+        color: #3C444C;
     }
-    #logo1 {
-        display:flex;width:36px;margin-right:15px;
+    section{
+        width:300px;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        opacity: 0;
+        padding-bottom:100px;
+        visibility: hidden;
+        margin-top: 8px;
     }
+    section.active{
+        opacity: 1;    
+        visibility: visible;
+    }
+    .nav {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 18px;
+    }
+    .nav .item {
+        height: 25px;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+        display: flex;
+        color:#747D88;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        z-index:10;
+        background-color: white;
+        font-family: 'Lora';
+        font-weight: 600;
+        font-size:14px;
+        padding: 0 8px 2px 8px;
+    }
+    .nav .active {
+        color:white;
+        background-color: #3C444C;
+        border-radius: 10px;
+    }
+    .content {
+        width: 100%;
+        position: relative;
+        padding-bottom:80px;
+        display: flex;
+        justify-content: center;
+    }
+
 </style>
 
-<body style="display:flex; flex-direction:column;justify-content:center;">
-    <div id="hi" style="display:flex;flex-direction:column;background-color:#A278F4; color:white;height:200px; width: 300px;margin: 30px auto;border:3px solid #A278F4;border-radius:30px; padding:15px 20px;">
-        <div style="text-align:right;margin: 10px 10px 0 0; cursor:pointer;">
-            <img src="{% static 'arrow.png' %}" onclick="reload()" width="25px" height="25px">
+<body style="margin:0">
+    <div style="width:330px;margin:0 auto;">
+        <div style="margin:16px 18px 11px 18px;position:relative">
+            <div id="title_con">한경관</div>
+            <div id="subtitle_con">현재 인원(&#177;1~2명) / 최대 정원</div>
+            <a href="{% url 'home' %}">
+                <img style="position:absolute;top:5px; left:250px"src="{% static 'homeIcon.png' %}" width="37px" height="37px">
+            </a>
         </div>
-        {% if iot_first %}
-            <span style="text-align:center; margin:auto auto 62px auto;font-size:60px;">{{iot_first.num}}</span>
-        {% else %}
-            <span style="text-align:center; margin:auto auto 62px auto;font-size:60px;">0</span>
-        {% endif %}
-    </div>
+        <div style="position:relative;display:flex;flex-direction:column;background-color:#A278F4; color:white;height:170px; width: 260px;margin: 0 auto;border:3px solid #A278F4;border-radius:20px; padding:15px 20px;">
+            <a href="{% url 'delete' %}" style="cursor:pointer;position:absolute;left:210px;top:18px">
+                <div style="display:flex;flex-direction:row-reverse; width:70px;">
+                    <img src="{% static 'reload.png' %}" style="margin-left:13px;" onclick="reload()" width="31px" height="31px">
+                    {% if user.is_authenticated %}  
+                    <img src="{% static 'trash.png' %}" width="28px" height="28px">
+                    {% endif %}
+                </div>
+            </a>
 
-    <a href="{% url 'delete' %}" style="color:white;display:flex;width:100px;margin:0 auto;">
-        <button style="color:white;background-color:rgb(255, 106, 106);border-radius:5px;border:0;width:100px;height:30px;font-size:16px;cursor:pointer;">
-            삭제
-        </button>
-    </a>
-
-
-    <script
-    src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-    crossorigin="anonymous">
-    </script>
-    <script>
-        function reload() {
-
-            location.reload();
+            {% if iot_first %}
+                <span style="text-align:center; margin:auto;font-size:60px;line-height:60px;">{{iot_first.num}}<span style="font-size: 42px; font-weight:bold; margin-left:5px;">%</span></span>
+            {% else %}
+                <span id="refreshCon" style="text-align:center; margin:auto;font-family:'Lora';font-size:60px;line-height:60px;"><span id="result">0</span><span style="font-size: 42px; font-weight:bold; margin-left:5px;">%</span></span>
+            {% endif %}
+            <div style="position:absolute; left:130px;top:160px;font-family:'Lora'; font-style:normal; font-weight: 600;">
+                <div style="display:flex;flex-direction:row-reverse; width:150px">
+                    <span>
+                        {% if iot_first %}
+                        <span id="p_num">{{iot_first.num}}</span>명 /
+                        {% else %}
+                        <span id="p_num">1</span>명 /
+                        {% endif %}
+                        <span id="t_num">100</span>명
+                    </span>
+                </div>
+            </div>
+        </div>
         
-        }
-    </script>
+        <div class="nav">
+            <div class="item active">Food Menu</div>
+            <div class="item">Today Graph</div>
+            <div class="item">Daily Graph</div>
+        </div>
+        <div class="content">
+            <section class="active">
+                <div style="display:flex;justify-content:space-between;margin-top:3px">
+                    <div>
+                        <span style="font-family:'Lora'; font-size:16px;font-weight:bold;">1명 가능 중...</span>
+                        <img src="{% static 'shoe.png' %}" width="18px" height="18px">    
+                    </div>
+                    <button onclick=eat() id="eat" style="width:75px;padding-top:3px;padding-bottom:3px;font-family:'Lora';font-weight:bold;background-color:#6AAEEC; color:white; border: 0; border-radius:5px">
+                        식사 예정
+                    </button>
+                </div>
+            </section>
+            <section>two</section>
+            <section>three</section>
+        </div>
+        
+        <script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous">
+        </script>
+        <script>
+            function eat() {
+                const eat = document.getElementById('eat')
+                if (eat.innerHTML == '식사 예정') {
+                    eat.style.backgroundColor = '#EE8787'
+                    eat.innerHTML = '취소'
+                }
+                else {
+                    eat.style.backgroundColor = '#6AAEEC'
+                    eat.innerHTML = '식사 예정'
+                }
+            }
+            function noeat() {
+                const no = document.getElementById('noEat')
+                no.style.display = 'block'
+            }
+            function reload() {
+                location.reload();
+            }
+            window.onload = function calculateCon() {
+                const present_num = document.getElementById('p_num').innerHTML;
+                const total_num = document.getElementById('t_num').innerHTML;
+                const result = 100 * present_num / total_num;
+                document.getElementById('result').innerHTML = result;
+            }
+
+            /*세부 메뉴바*/
+            const items=document.querySelectorAll('.item');
+            const sections=document.querySelectorAll('section');
+
+            function removeActive(){
+                items.forEach(item=>{
+                    item.classList.remove('active');
+                });
+
+                sections.forEach(item=>{
+                    item.classList.remove('active');
+                });
+            }
+
+            items.forEach((item,index)=>{
+                item.addEventListener('click', function(){
+                    removeActive();
+                    item.classList.add('active');
+                    sections[index].classList.add('active');
+                });
+            })
+        </script>
+    
+    </div>
 </body>
 
 {% endblock %}

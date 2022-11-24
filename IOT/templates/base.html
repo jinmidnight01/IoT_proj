@@ -3,153 +3,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .header_mob {
-            height: 60px;
-        }
-        header{
-          box-shadow: 0px 0px 1.5vw rgba(0, 0, 0, 0.3);
-          z-index:5;
-          top:0;
-          position: fixed;
-          left: 0;
-          right: 0;
-          height: 60px;
-          display: flex;
-          background-color: white;
-        }
-        .menu-line {
-          background-color: #333;
-          height: 2px;
-          width: 100%;
-          border-radius: 2px;
-          position: absolute;
-          left: 0;
-          transition: all 0.25s ease-in-out;
-        }
-        .menu-line-2 {
-          top: 0;
-          bottom: 0;
-          margin: auto;
-        }
-        .menu-line-3 {
-          bottom: 0;
-        }
-        .menu.open .menu-line-1 {
-          transform: translateY(7px) translateY(-50%) rotate(-45deg);
-        }
-        .menu.open .menu-line-2 {
-          opacity: 0;
-        }
-        .menu.open .menu-line-3 {
-          transform: translateY(-7px) translateY(50%) rotate(45deg);
-        }
-        .menu-circle {
-          background-color: #eeee;
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          border-radius: 50%;
-          transform: scale(1);
-          z-index: 1000;
-          transition: transform 0.3s ease-in-out;
-        }
-        .menu:hover .menu-circle {
-          transform: scale(1);
-        }
-        .menu.open .menu-circle {
-          transform: scale(60);
-        }
-        .menu-overlay {
-          background-color: #eeee;
-          color: #333;
-          height: 100%;
-          width: 100%;
-          position: fixed;
-          text-align: center;
-          transition: opacity 0.2s ease-in-out;
-          z-index: 1001;
-          opacity: 0;
-          visibility: hidden;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        .menu-overlay.open {
-          opacity: 1;
-          visibility: visible;
-        }
-        .info {
-          text-align: center;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .overlay-info {
-          text-align: center;
-        }
-        .overlay-menu {
-            position:absolute;
-            font-size:40px;
-            font-weight: bold;
-            font-family: Arial;
-            color:black;
-        }
-        .menu {
-            position: absolute;
-            top:5px;
-            left: 15px;
-            height: 1px;
-            width: 1px;
-        }
-        .menu-link {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            z-index: 1002;
-            margin-top: 1.5px;
-            margin-left:0.5px;
-        }
-        .menu-icon {
-            position: absolute;
-            width: 20px;
-            height: 14px;
-            margin: auto;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 1px;
-        }
-        #title1, #title2, #title3 {
-            margin: auto 0;
-            margin-left:61px;
-            padding-bottom:3px;
-            
-            font-family: 'Lora';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 25px;
-            
-            flex-grow: 2;
-            text-align: center;
-        }
-        a {text-decoration:none;color:inherit}
-        a {-webkit-tap-highlight-color: transparent;}
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>혼잡도</title>
+  <style>
+    .header_mob {
+        height: 60px;
+    }
+    header{
+      box-shadow: 0px 0px 1.5vw rgba(0, 0, 0, 0.3);
+      z-index:5;
+      top:0;
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 60px;
+      display: flex;
+      background-color: white;
+    }
+    .menu-line {
+      background-color: #333;
+      height: 2px;
+      width: 100%;
+      border-radius: 2px;
+      position: absolute;
+      left: 0;
+      transition: all 0.25s ease-in-out;
+    }
+    .menu-line-2 {
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+    .menu-line-3 {
+      bottom: 0;
+    }
+    .menu.open .menu-line-1 {
+      transform: translateY(7px) translateY(-50%) rotate(-45deg);
+    }
+    .menu.open .menu-line-2 {
+      opacity: 0;
+    }
+    .menu.open .menu-line-3 {
+      transform: translateY(-7px) translateY(50%) rotate(45deg);
+    }
+    .menu-circle {
+      background-color: #eeee;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(1);
+      z-index: 1000;
+      transition: transform 0.3s ease-in-out;
+    }
+    .menu:hover .menu-circle {
+      transform: scale(1);
+    }
+    .menu.open .menu-circle {
+      transform: scale(60);
+    }
+    .menu-overlay {
+      background-color: #eeee;
+      color: #333;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      text-align: center;
+      transition: opacity 0.2s ease-in-out;
+      z-index: 1001;
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .info {
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .overlay-info {
+      text-align: center;
+    }
+    .overlay-menu {
+        position:absolute;
+        font-size:40px;
+        font-weight: bold;
+        font-family: Arial;
+        color:black;
+    }
+    .menu {
+        position: absolute;
+        top:5px;
+        left: 15px;
+        height: 1px;
+        width: 1px;
+    }
+    .menu-link {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1002;
+        margin-top: 1.5px;
+        margin-left:0.5px;
+    }
+    .menu-icon {
+        position: absolute;
+        width: 20px;
+        height: 14px;
+        margin: auto;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 1px;
+    }
+    #title {
+        margin: auto 0;
+        margin-left:57px;
+        padding-bottom:3px;
+        
+        font-family: 'Lora';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 25px;
+        
+        flex-grow: 2;
+        text-align: center;
+    }
+    a, a:hover, a:active {text-decoration:none;color:inherit;}
+    #overlay-home {
+        color: #A278F4;
+    }
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
 </head>
 <body style="background-color:white;">
-    <!-- 상단 navbar(mob 버전)-->
     <div class="header_mob" style="position:relative">
         <header>
-            <div id='title1'>YONSEI UNIV.</div>
-            <div id='title2'>SEOUL UNIV.</div>
-            <div id='title3'>KAIST</div>
+            <div id='title'>YONSEI UNIV.</div>
 
             <div class="menu" style="width:50px;height:50px">
                 <span class="menu-circle"></span>
@@ -161,21 +163,9 @@
                 </span>
                 </a>
             </div>
-            <div id="logo1">
-                <a href="{% url 'home' %}" style="margin:auto 0;">
-                    <img src="{% static 'yonseilogo.png' %}" width="40px" height="38px">
-                </a>    
-            </div>
-            <div id="logo2">
-                <a href="{% url 'seoul' %}" style="margin:auto 0;">
-                    <img style="margin:auto 0;" src="{% static 'seoul.png' %}" width="40px" height="38px">
-                </a>    
-            </div>
-            <div id="logo3">
-                <a href="{% url 'kaist' %}" style="margin:auto 0;">
-                    <img style="margin:auto 0;" src="{% static 'kaist.png' %}" width="40px" height="38px">
-                </a>    
-            </div>
+            <a href="{% url 'home' %}" style="margin:auto 10px auto 0;">
+                <img src="{% static 'yonseilogo.png' %}" width="40px" height="38px">
+            </a>    
         </header>
     </div>
 
@@ -185,16 +175,16 @@
                 YONSEI UNIV.
             </a>
         </div>
-        <div style="top:200px;" class="overlay-menu" id="overlay-seoul">
+        <div style="top:200px;" class="overlay-menu">
             <a href="{% url 'seoul' %}">
                 SEOUL UNIV.
             </a>
         </div>
-        <div style="top:320px;" class="overlay-menu" id="overlay-kaist">
+        <div style="top:320px;" class="overlay-menu">
             <a href="{% url 'kaist' %}">
                 KAIST
             </a>
-        </div>
+        </div>    
     </div>
     
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>

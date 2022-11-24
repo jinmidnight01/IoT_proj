@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 import os
 
@@ -47,3 +47,25 @@ def kaist(request):
 
 def seoul(request):
     return render(request, 'seoul.html')
+
+def like(request):
+    if request.user not in User.objects.all():
+        person = User.objects.create(name=request.user)
+        person.save()
+
+    if request.user in person.follower.all():
+        person.follower.remove(request.user)
+        person.save()
+    else:
+        person.follower.add(request.user)
+        person.save()
+    return redirect('mypage', user_id)
+    if request.user in like_b.like.all():
+        like_b.like.remove(request.user)
+        like_b.like_count -= 1
+        like_b.save()
+    else:
+        like_b.like.add(request.user)
+        like_b.like_count += 1
+        like_b.save()
+    return redirect('detail', community_id)
