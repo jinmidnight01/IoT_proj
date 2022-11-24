@@ -8,7 +8,12 @@ import os
 
 url = 'https://www.yonsei.ac.kr/_custom/yonsei/m/menu.jsp'
 
-driver = webdriver.Chrome("changdae\crawl\chromedriver.exe")
+# # 매 실행 시 창 띄워지는 게 번거로우면 아래 옵션 실행 하고 드라이버 뒤 options 주석 풀고 ) 지우기
+# options = webdriver.ChromeOptions()
+# options.add_argument("headless")
+
+driver = webdriver.Chrome("changdae\crawl\chromedriver.exe") #, options=options)
+
 driver.get(url)
 driver.implicitly_wait(3)
 
