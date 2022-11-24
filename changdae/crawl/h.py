@@ -1,18 +1,26 @@
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
-import random
-from selenium.webdriver.common.keys import Keys
-from urllib.request import urlretrieve
-import os
+from selenium.webdriver.chrome.options import Options
+# fake_useragent import 하기
+from fake_useragent import UserAgent
+
+# 가짜 agent 사용
+ua = UserAgent(verify_ssl=False)
+UserAgent = ua.random
+
+# 옵션 설정 - 창 최소화, agent 설정
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--window-size=0,0")
+
+# chrome_options.add_argument('--ignore-certificate-errors')
+# chrome_options.add_argument('--allow-running-insecure-content')
+chrome_options.add_argument(f'user-agent={UserAgent}')
+# chrome_options.add_argument('headless')
 
 url = 'https://www.yonsei.ac.kr/_custom/yonsei/m/menu.jsp'
 
-# # 매 실행 시 창 띄워지는 게 번거로우면 아래 옵션 실행 하고 드라이버 뒤 options 주석 풀고 ) 지우기
-# options = webdriver.ChromeOptions()
-# options.add_argument("headless")
-
-driver = webdriver.Chrome("changdae\crawl\chromedriver.exe") #, options=options)
+driver = webdriver.Chrome("changdae\crawl\chromedriver.exe", chrome_options=chrome_options)
 
 driver.get(url)
 driver.implicitly_wait(3)
