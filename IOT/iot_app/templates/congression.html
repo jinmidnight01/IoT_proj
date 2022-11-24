@@ -121,12 +121,18 @@
             <section class="active">
                 <div style="display:flex;justify-content:space-between;margin-top:3px">
                     <div>
-                        <span style="font-family:'Lora'; font-size:16px;font-weight:bold;">1명 가능 중...</span>
+                        <span style="font-family:'Lora'; font-size:16px;font-weight:bold;">{{eat_first.eat_count}}명 가능 중...</span>
                         <img src="{% static 'shoe.png' %}" width="18px" height="18px">    
                     </div>
-                    <button onclick=eat() id="eat" style="width:75px;padding-top:3px;padding-bottom:3px;font-family:'Lora';font-weight:bold;background-color:#6AAEEC; color:white; border: 0; border-radius:5px">
-                        식사 예정
+                    {% if eat_first.flag == True %}
+                    <button id="eat" style="width:75px;padding-top:3px;padding-bottom:3px;font-family:'Lora';font-weight:bold;background-color:#6AAEEC; color:white; border: 0; border-radius:5px">
+                        <a href="{% url 'eat_plus' %}">식사 예정</a>
                     </button>
+                    {% else %}
+                    <button id="eat" style="width:75px;padding-top:3px;padding-bottom:3px;font-family:'Lora';font-weight:bold;background-color:#EE8787; color:white; border: 0; border-radius:5px">
+                        <a href="{% url 'eat_minus' %}">취소</a>
+                    </button>
+                    {% endif %}
                 </div>
             </section>
             <section>two</section>
@@ -139,21 +145,6 @@
         crossorigin="anonymous">
         </script>
         <script>
-            function eat() {
-                const eat = document.getElementById('eat')
-                if (eat.innerHTML == '식사 예정') {
-                    eat.style.backgroundColor = '#EE8787'
-                    eat.innerHTML = '취소'
-                }
-                else {
-                    eat.style.backgroundColor = '#6AAEEC'
-                    eat.innerHTML = '식사 예정'
-                }
-            }
-            function noeat() {
-                const no = document.getElementById('noEat')
-                no.style.display = 'block'
-            }
             function reload() {
                 location.reload();
             }

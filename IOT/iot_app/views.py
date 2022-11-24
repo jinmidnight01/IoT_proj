@@ -8,7 +8,7 @@ def home(request):
     return render(request, 'home.html')
 
 def congression(request):
-    
+
     if os.path.isfile("iot.csv"):
         lst = []
         t = []
@@ -31,8 +31,12 @@ def congression(request):
         os.remove("iot.csv")
         
     iot_first = Congression.objects.all().order_by('-created_at').first()
-
-    return render(request, 'congression.html', {'iot_first':iot_first})
+    Eat.objects.create(eat_count=0).save()
+    eat_first = Eat.objects.all().first()
+    Eat.objects.all().delete()
+    Eat.objects.create(eat_count=eat_first.eat_count).save()
+    
+    return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first})
 
 def delete(request):
     Congression.objects.all().delete()
@@ -48,24 +52,19 @@ def kaist(request):
 def seoul(request):
     return render(request, 'seoul.html')
 
-def like(request):
-    if request.user not in User.objects.all():
-        person = User.objects.create(name=request.user)
-        person.save()
+def eat_plus(request):    
+    first = Eat.objects.all().first()
+    first.eat_count += 1
+    first.flag = False
+    first.save()
+    return redirect('congression')
 
-    if request.user in person.follower.all():
-        person.follower.remove(request.user)
-        person.save()
-    else:
-        person.follower.add(request.user)
-        person.save()
-    return redirect('mypage', user_id)
-    if request.user in like_b.like.all():
-        like_b.like.remove(request.user)
-        like_b.like_count -= 1
-        like_b.save()
-    else:
-        like_b.like.add(request.user)
-        like_b.like_count += 1
-        like_b.save()
-    return redirect('detail', community_id)
+def eat_minus(request): 
+    first = Eat.objects.all().first()
+    first.eat_count -= 1
+    first.flag = True
+    first.save()
+    return redirect('congression')
+
+    
+    

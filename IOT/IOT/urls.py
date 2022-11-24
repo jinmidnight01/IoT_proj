@@ -24,4 +24,6 @@ urlpatterns = [
     path('delete/', delete, name='delete'),
     path('seoul/', seoul, name="seoul"),
     path('kaist/', kaist, name='kaist'),
+    path('eat_plus/', eat_plus, name='eat_plus'),
+    path('eat_minus/', eat_minus, name='eat_minus'),
 ]

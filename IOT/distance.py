@@ -1,6 +1,6 @@
-import modi
 import datetime
 import matplotlib.pyplot as plt
+import modi
 
 my_list = []
 
