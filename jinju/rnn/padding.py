@@ -37,15 +37,18 @@ for group in raw_data :
             inc_count += 1
     total_count += inc_count + dec_count
     
-    if total_count != 1 :
+    if total_count == 1 :
+        for i in range(COUNT):
+            data_bundle.append(min_value)
+    else:
         total_count -= 1
     
     inc_iter = round(COUNT*inc_count/(total_count))
     for i in range(inc_iter) :
-        data_bundle.append(round(first_value - abs(first_value-min_value)*i*inc_count/(total_count)))
+        data_bundle.append(round(first_value - (first_value-min_value)*i/COUNT))
     dec_iter = round(COUNT*dec_count/(total_count))
     for i in range(dec_iter) :
-        data_bundle.append(round(min_value + abs(last_value-min_value)*i*dec_count/(total_count)))
+        data_bundle.append(round(min_value + (last_value-min_value)*i/COUNT))
     
     padded_data.append(data_bundle)
     data_bundle = []
@@ -54,3 +57,7 @@ for i in padded_data :
     for j in i : 
         print(j)
     print()
+    
+import pandas as pd
+df = pd.DataFrame(padded_data)
+df.to_csv('tempddd.csv')
