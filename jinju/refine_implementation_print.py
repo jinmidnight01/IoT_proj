@@ -17,14 +17,15 @@ MIN_CHANGE_ALLOWANCE = 200
 REPEAT_ALLOWANCE = 3
 
 repeat_count = 0 # to determine whether it's fixed or minimum/maximum
-state = 0 # to remember the previous gradient of the graph
+state = 0 # to remember the previous gradient of the graph > abstraction
 prev_distance = 0
 new_abstraction = False # to determine whether new group is updated
 merge_flag = [] # to determine whether the group is already merged or not
 min_set = [] # set of minimum values of every group
 new_group = False
-i = 0 # number of current abstracted_group
-astate = 0
+i = -1 # number of current abstracted_group
+astate = 0 # to remember the previou gradient of the graph > inout
+previous_result = 0 # to avoid writing same result
 
 def getTimeValue(time) : # getting sum of hour/min/sec as seconds
     (h,m,s) = time.split(":")
@@ -66,7 +67,7 @@ data = Mentos()
     
 while True : 
     time.sleep(0.05)
-    time_distance = (datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S"),ultrasonic.distance)
+    time_distance = (datetime.datetime.today().strftime("%Y/%m/%d %H:%M:%S.%f"),ultrasonic.distance)
 
     ########################ABSTRACTION#########################
     # . . .
@@ -81,13 +82,19 @@ while True :
     if (prev_distance - current_distance) >= GLITCH_ALLOWANCE : 
         # and the gradient had been INCREASING
         if state == 2 :
-            # this is a new group after the completed group
-            # so append the completed group to the abstracted_data
-            data.abstracted_data.append(data.pre_abstracted_data)
-            print(data.pre_abstracted_data,"1")
+            if len(data.pre_abstracted_data)!=0:
+                # this is a new group after the completed group
+                # so append the completed group to the abstracted_data
+                data.abstracted_data.append(data.pre_abstracted_data)
+                #print(data.pre_abstracted_data,"1")
+                i += 1
+                merge_flag.append(False)
+                new_abstraction = True
+            else : 
+                state = 0
             # and empty the temporary list for the new group
             data.pre_abstracted_data = []
-            new_abstraction = True
+            
         
         # mark the state as DECREASING
         state = 1
@@ -122,18 +129,22 @@ while True :
         # and the graph has been increasing
         if state == 2 :
         # and the value repeated enough time to be fixed value
-            if repeat_count >= MIN_FREQ and len(data.pre_abstracted_data)!=0:
-                for l in range(10):
-                    data.pre_abstracted_data.pop(-1)
-                # append the group to the abstracted_data
-                data.abstracted_data.append(data.pre_abstracted_data)
-                print(data.pre_abstracted_data,"2")
-                # and empty the group for the next data
+            if repeat_count >= MIN_FREQ:
+                if len(data.pre_abstracted_data)!=10:
+                    for l in range(10):
+                        data.pre_abstracted_data.pop(-1)
+                    # append the group to the abstracted_data
+                    data.abstracted_data.append(data.pre_abstracted_data)
+                    #print(data.pre_abstracted_data,"2")
+                    i += 1
+                    merge_flag.append(False)
+                    new_abstraction = True
+                    # and empty the group for the next data
                 data.pre_abstracted_data = []
                 # then reset the count and the state
                 state = 0
                 repeat_count = 0
-                new_abstraction = True
+                
                         
             # but can't determine if the value is fixed or just repeated
             else : 
@@ -195,6 +206,7 @@ while True :
                 elif front_time_gap > rear_time_gap and merge_flag[i-1]==False:
                     data.abstracted_data[i-1] += data.abstracted_data.pop(i)
                     merge_flag[i-1] = True
+                    i -= 1
                     
             # if the group graph has abnormal shape (which resembles a straw)
             elif abs(front_fixed_data - min_data) < GLITCH_ALLOWANCE:
@@ -205,8 +217,7 @@ while True :
             elif abs(rear_fixed_data - min_data) < GLITCH_ALLOWANCE:
                 if merge_flag[i-1]==False:
                     data.abstracted_data[i-1] += data.abstracted_data.pop(i)
-        
-        i += 1
+                    i -= 1
         
         ##########################TRIM###########################
         # . . .
@@ -257,8 +268,8 @@ while True :
             increase_count = 0
             increase_max = 0
             # 3. value right in front/behind of the minimum value
-            min_front_value =  0
-            min_rear_value = 0
+            min_front_value =  1
+            min_rear_value = 1
 
             # counting the decreasing/increasing data, determining front/rear min data
             for o in range(len(group)):
@@ -282,7 +293,7 @@ while True :
                         repeat = 0
                 elif state > 0 and (distance >= increase_max or abs(distance-increase_max)<=GLITCH_ALLOWANCE):
                     if state == 1:
-                        if float(group[i][1])!=rear_value:
+                        if float(group[o][1])!=rear_value:
                             min_rear_value = float(group[o][1])
                     increase_count += 1
                     increase_max = distance
@@ -320,8 +331,11 @@ while True :
                 exitt += 1
             """  
             if enter > exitt:
-                print((group[0][0],'Enter'))
+                result = group[0][0],'Enter'
             elif enter < exitt:
-                print((group[0][0],'Exit'))
+                result = group[0][0],'Exit'
             else:
-                print((group[0][0],'IDK'))
+                result = group[0][0],'IDK'
+            if previous_result != result:
+                print(group,enter,exitt,result)
+                previous_result = result
