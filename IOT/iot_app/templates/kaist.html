@@ -144,6 +144,9 @@
         #overlay-home {
             color: #A278F4;
         }
+        #img {
+            margin: 33px auto 0 auto;
+        }
     </style>
 </head>
 <body style="background-color:white;">
@@ -184,7 +187,13 @@
             </a>
         </div>    
     </div>
-    
+    <div style="display:flex; flex-direction:column">
+        <img src="{% static '고를샘1.png' %}" id="img" width="270" height="180">
+        <img src="{% static '맛나샘1.png' %}" id="img" width="270" height="180">
+        <img src="{% static '한경관1.png' %}" id="img" width="270" height="180">
+        <img src="{% static '부를샘1.png' %}" id="img" style="margin-bottom:33px;" width="270" height="180">
+    </div>
+
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
     $(function() {

@@ -10,3 +10,7 @@ class Congression(models.Model):
 class Eat(models.Model):
     flag = models.BooleanField(default=True)
     eat_count = models.PositiveIntegerField(default=0)
+
+class Menu(models.Model):
+    lunch = models.CharField(max_length=500)
+    dinner = models.CharField(max_length=500)

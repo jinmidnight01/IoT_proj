@@ -29,7 +29,21 @@ def congression(request):
         
         f.close()
         os.remove("iot.csv")
+    
+    if os.path.isfile("menu.csv"):       
+        f_menu = open("menu.csv", 'r')
         
+        for i in range(0, 2):
+            if i == 0:
+                menu_data = f_menu.readline().strip()
+                lunch = menu_data.split(',')
+            else:
+                menu_data = f_menu.readline().strip()
+                dinner = menu_data.split(',')
+        
+        
+
+    
     iot_first = Congression.objects.all().order_by('-created_at').first()
     Eat.objects.create(eat_count=0).save()
     eat_first = Eat.objects.all().first()

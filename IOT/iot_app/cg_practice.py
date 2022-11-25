@@ -4,9 +4,9 @@ import datetime
 import matplotlib.pyplot as plt
 
 # MODI 모듈의 번들을 연결하기 위해, MODI 객체를 인스턴스화합니다.
-bundle = modi.MODI()
+# bundle = modi.MODI()
 a=[]
-ultrasonic = bundle.ultrasonics[0]
+# ultrasonic = bundle.ultrasonics[0]
 num_sign=0
 big_gradient1=0
 big_gradient2=0
@@ -24,8 +24,8 @@ data = []
 
 while True:
     time.sleep(0.05)
-    ultrasonic_distance = ultrasonic.distance
-    a.append(ultrasonic_distance)
+    # ultrasonic_distance = ultrasonic.distance
+    a.append(1)
     i+=1
     if num_sign<0:
         num_sign=0
@@ -142,7 +142,6 @@ while True:
             small_gradient3=0
             small_gradient4=0
             small_gradient5=0
-
 
 
 
