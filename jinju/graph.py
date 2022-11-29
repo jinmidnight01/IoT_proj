@@ -4,12 +4,18 @@ import csv
 x = []
 y = []
   
-with open(r'C:\Users\Pearl\Desktop\IoT\Codes\experiment\(3) 교육과학관\1.csv','r') as csvfile:
+with open(r'C:\Users\Pearl\Desktop\IoT\result.csv','r') as csvfile:
     plots = csv.reader(csvfile, delimiter = ',')
-      
+    sum = 0
     for row in plots:
-        x.append(row[0])
-        y.append(float(row[1]))
+        
+        if row[1][2:-2]=='Exit' :
+            sum -= 1
+        elif row[1][2:-2]=='Enter':
+            sum += 1
+        print(row[1][1:-1])
+        x.append(row[0][-16:21])
+        y.append(sum)
   
 plt.bar(x, y, color = 'g', width = 0.72, label = "Visualize")
 plt.xlabel('time')
