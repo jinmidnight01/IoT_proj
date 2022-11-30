@@ -8,6 +8,71 @@ import os
 import datetime
 import matplotlib.pyplot as plt
 import csv
+# from .refine_final import Mentos
+import numpy as np
+import matplotlib.ticker as mticker  
+
+# # 그래프 추출
+# data = Mentos()
+
+# # 1. total data graph
+# x = []
+# y = []
+
+# with open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv",'r') as csvfile:
+#     plots = csv.reader(csvfile, delimiter = ',')
+    
+#     for row in plots:
+#         x.append(row[0])
+#         y.append(float(row[1]))
+
+# data.abstract()
+
+# # 2. abstracted data graph
+# x = []
+# y = []
+# n=0
+
+# for group in data.abstracted_data :
+#     for date_distance in group:
+#         x.append(date_distance[0])
+#         y.append(float(date_distance[1]))
+#     for i in range(3): # to check the group
+#         x.append(str(n))
+#         y.append(0)
+#         n += 1
+        
+# data.merge()
+
+# # 3. merged data graph
+# x = []
+# y = []
+
+# for group in data.abstracted_data :
+#     for date_distance in group:
+#         x.append(date_distance[0])
+#         y.append(float(date_distance[1]))
+        
+# data.trim()
+
+# # 4. trimmed data graph
+# x = []
+# y = []
+# n = 0
+
+# for group in data.trimmed_data :
+#     for date_distance in group:
+#         x.append(date_distance[0])
+#         y.append(float(date_distance[1]))
+#         # print(date_distance)
+#     for i in range(3): # to check the group
+#         x.append(str(n))
+#         y.append(0)
+#         n += 1
+#     # print()
+    
+# data.inout()
+
 
 # Create your views here.
 
@@ -71,6 +136,48 @@ def congression(request):
             a.save()
         except:
             pass
+    
+    # # 그래프
+    # if os.path.isfile("result.csv"):
+    #     os.remove("result.csv")   
+    
+    # for i in data.analyzed_data:
+    #     print(i)
+    
+    # f2 = open("result.csv", 'w')
+    # for i in data.analyzed_data:
+    #     f2.write(str(i)+'\n')
+    # f2.close()
+    
+    x = []
+    y = []
+    
+    with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv','r') as csvfile:
+        plots = csv.reader(csvfile, delimiter = ',')
+        sum = 0
+        for row in plots:
+            
+            if row[1][2:-2]=='Exit' :
+                sum -= 1
+            elif row[1][2:-2]=='Enter':
+                sum += 1
+            
+            # print(row[1][1:-1])
+            x.append(row[0][-16:21])
+            if (sum >=0 ):
+                y.append(sum)
+            else:
+                sum = 0
+    
+    fig, ax = plt.subplots()
+    ax.plot(x, y, linewidth = 0.72)
+    plt.xlabel('Time')
+    plt.ylabel('Congression')
+    plt.xticks(x)
+    plt.yticks(y)
+    # plt.gca().yaxis.set_major_formatter(mticker.FormatStrFormatter("%i"))
+    # plt.title(str(datetime.datetime.now().year)+"/"+str(datetime.datetime.now().month) + "/" + str(datetime.datetime.now().day))
+    plt.savefig('static/{name}.png'.format(name=str(datetime.datetime.now().month) + "_" + str(datetime.datetime.now().day)))
 
     # 객체 생성
     iot_first = Congression.objects.all().order_by('-created_at').first()

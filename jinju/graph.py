@@ -4,7 +4,7 @@ import csv
 x = []
 y = []
   
-with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\result.csv','r') as csvfile:
+with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv','r') as csvfile:
     plots = csv.reader(csvfile, delimiter = ',')
     sum = 0
     for row in plots:

@@ -20,7 +20,6 @@ small_gradient4=0
 small_gradient5=0
 break_count=0
 i=-1
-data = []
 
 prev = datetime.datetime.now()
 
@@ -36,18 +35,18 @@ while True:
     if i<30:
         continue
     
-    # 파일 생성
-    f1 = open("IOT/iot.csv", 'a')
+    # distance.csv 파일 생성
+    f2 = open("distance.csv", 'a')
     now = datetime.datetime.now()
+    f2.write(str(now) + ',' + str(ultrasonic_distance)  + "\n")
+    f2.close()
+
+    # iot.csv 파일 생성
+    f1 = open("iot.csv", 'a')
     f1.write(str(now) + ',' + str(num_sign)  + "\n")
     f1.close()
     
-    if prev.second != now.second:
-        prev = now
-        f2 = open("IOT/graph.csv", 'a')
-        f2.write(str(now) + ',' + str(num_sign)  + "\n")
-        f2.close()
-
+    # 실시간 알고리즘
     if abs(a[i-1]-a[i])>=2:
         break_count=0
         if big_gradient1<a[i]-a[i-1]:
@@ -150,19 +149,3 @@ while True:
             small_gradient3=0
             small_gradient4=0
             small_gradient5=0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

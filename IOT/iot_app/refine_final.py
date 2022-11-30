@@ -312,9 +312,9 @@ class Mentos :
             min_front_ratio = min_front_value/(min_front_value+min_rear_value)
             min_rear_ratio = min_rear_value/(min_front_value+min_rear_value)
             
-            print(rear_value_ratio,front_value_ratio)
-            print(decrease_count_ratio,increase_count_ratio)
-            print(min_front_ratio,min_rear_ratio)
+            # print(rear_value_ratio,front_value_ratio)
+            # print(decrease_count_ratio,increase_count_ratio)
+            # print(min_front_ratio,min_rear_ratio)
             
             enter = 185*rear_value_ratio + 15*decrease_count_ratio + 7*min_front_ratio
             exitt = 185*front_value_ratio + 15*increase_count_ratio + 7*min_rear_ratio
@@ -334,8 +334,8 @@ class Mentos :
             elif min_front_value < min_rear_value:
                 exitt += 1
             """  
-            print(enter,exitt)
-            print()
+            # print(enter,exitt)
+            # print()
             if enter > exitt:
                 self.analyzed_data.append((group[i][0],'Enter'))
             elif enter < exitt:
@@ -416,12 +416,12 @@ class Mentos :
 #     for date_distance in group:
 #         x.append(date_distance[0])
 #         y.append(float(date_distance[1]))
-#         print(date_distance)
+#         # print(date_distance)
 #     for i in range(3): # to check the group
 #         x.append(str(n))
 #         y.append(0)
 #         n += 1
-#     print()
+#     # print()
     
 # # plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
 # # plt.xlabel('time')
@@ -435,7 +435,8 @@ class Mentos :
 # for i in data.analyzed_data:
 #     print(i)
 
-# f2 = open("IOT/result.csv", 'w')
+# f = open("IOT/result.csv", 'w')
 # for i in data.analyzed_data:
-#     f2.write(str(i)+'\n')
-# f2.close()
+#     f.write(str(i)+'\n')
+# f.close()
+
