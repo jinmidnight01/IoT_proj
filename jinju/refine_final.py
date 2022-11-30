@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-fname = r"C:\Users\Pearl\Desktop\IoT\Codes\experiment\(1) 세미나룸\2-1.csv"
+fname = r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv"
 file = open(fname,'r')
 line = csv.reader(file)
 
@@ -269,8 +269,8 @@ class Mentos :
             increase_count = 0
             increase_max = 0
             # 3. value right in front/behind of the minimum value
-            min_front_value =  0
-            min_rear_value = 0
+            min_front_value =  1
+            min_rear_value = 1
             
             # counting the decreasing/increasing data, determining front/rear min data
             for i in range(len(group)):
@@ -453,26 +453,28 @@ for group in data.trimmed_data :
     for date_distance in group:
         x.append(date_distance[0])
         y.append(float(date_distance[1]))
-        print(date_distance)
+        # print(date_distance)
     for i in range(3): # to check the group
         x.append(str(n))
         y.append(0)
         n += 1
-    print()
+    # print()
     
-# plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
-# plt.xlabel('time')
-# plt.ylabel('distance')
-# plt.title('visualization')
-# plt.legend()
-# plt.show()
+plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
+plt.xlabel('time')
+plt.ylabel('distance')
+plt.title('visualization')
+plt.legend()
+plt.show()
 
 data.inout()
 
 for i in data.analyzed_data:
     print(i)
 
-f2 = open("IOT/result.csv", 'w')
+file.close()
+
+f2 = open("result.csv", 'w')
 for i in data.analyzed_data:
     f2.write(str(i)+'\n')
 f2.close()

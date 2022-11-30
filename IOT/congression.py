@@ -36,13 +36,13 @@ while True:
         continue
     
     # distance.csv 파일 생성
-    f2 = open("distance.csv", 'a')
+    f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv", 'a')
     now = datetime.datetime.now()
     f2.write(str(now) + ',' + str(ultrasonic_distance)  + "\n")
     f2.close()
 
     # iot.csv 파일 생성
-    f1 = open("iot.csv", 'a')
+    f1 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\iot.csv", 'a')
     f1.write(str(now) + ',' + str(num_sign)  + "\n")
     f1.close()
     
