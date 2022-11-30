@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-fname = r"C:\Users\Pearl\Desktop\IoT\Codes\experiment\(3) 교육과학관\1.csv"
+fname = r"C:\Users\Pearl\Desktop\IoT\Codes\experiment\(1) 세미나룸\2-1.csv"
 file = open(fname,'r')
 line = csv.reader(file)
 
@@ -312,12 +312,44 @@ class Mentos :
             min_front_ratio = min_front_value/(min_front_value+min_rear_value)
             min_rear_ratio = min_rear_value/(min_front_value+min_rear_value)
             
+            if max(front_value_ratio,0.4) == 0.4 :    
+                front_value_ratio = 0.4
+            else :
+                front_value_ratio = min(front_value_ratio,0.6)
+            if max(rear_value_ratio,0.4) == 0.4:
+                rear_value_ratio = 0.4
+            else : 
+                rear_value_ratio = min(rear_value_ratio,0.6)
+            if max(min_front_ratio,0.4)==0.4:
+                min_front_ratio = 0.4
+            else:
+                min_front_ratio = min(min_front_ratio,0.6)
+            if max(min_rear_ratio,0.4)==0.4:
+                min_rear_ratio = 0.4
+            else:
+                min_rear_ratio = min(min_rear_ratio,0.6)
+            if max(decrease_count_ratio,0.4)==0.4:
+                decrease_count_ratio = 0.4
+            else:
+                decrease_count_ratio = min(decrease_count_ratio,0.6)
+            if max(increase_count_ratio,0.4)==0.4:
+                increase_count_ratio = 0.4
+            else:
+                increase_count_ratio = min(increase_count_ratio,0.6)
+            
             print(rear_value_ratio,front_value_ratio)
             print(decrease_count_ratio,increase_count_ratio)
             print(min_front_ratio,min_rear_ratio)
             
-            enter = 185*rear_value_ratio + 15*decrease_count_ratio + 7*min_front_ratio
-            exitt = 185*front_value_ratio + 15*increase_count_ratio + 7*min_rear_ratio
+            enter = 200*rear_value_ratio + 12*decrease_count_ratio + 5*min_front_ratio
+            exitt = 200*front_value_ratio + 12*increase_count_ratio + 5*min_rear_ratio
+            
+            #enter = 185*rear_value_ratio + 15*decrease_count_ratio + 7*min_front_ratio
+            #exitt = 185*front_value_ratio + 15*increase_count_ratio + 7*min_rear_ratio
+            
+            #enter = 100*rear_value_ratio + 30*decrease_count_ratio 
+            #exitt = 100*front_value_ratio + 30*increase_count_ratio 
+            
             """
             enter = 0
             exitt = 0
@@ -333,7 +365,8 @@ class Mentos :
                 enter += 1
             elif min_front_value < min_rear_value:
                 exitt += 1
-            """  
+            """
+ 
             print(enter,exitt)
             print()
             if enter > exitt:
@@ -391,12 +424,16 @@ data.merge()
 # 3. merged data graph
 x = []
 y = []
+n=0
 
 for group in data.abstracted_data :
     for date_distance in group:
         x.append(date_distance[0])
         y.append(float(date_distance[1]))
-        
+    for i in range(3): # to check the group
+        x.append(str(n))
+        y.append(0)
+        n += 1  
     
 plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
 plt.xlabel('time')
