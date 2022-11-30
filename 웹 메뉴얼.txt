@@ -1,0 +1,12 @@
+# 가상환경 키기
+. venv/Scripts/activate
+
+# 폴더 이동
+cd IOT
+
+# DB 생성(한 번만 해주면 됨)
+python manage.py makemigrations
+python manage.py migrate
+
+# 서버 구동
+python manage.py runserver

@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-fname = r"C:\Users\Pearl\Desktop\IoT\Codes\experiment\(3) 교육과학관\1.csv"
+fname = r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\experiment\(3) 교육과학관\1.csv"
 file = open(fname,'r')
 line = csv.reader(file)
 

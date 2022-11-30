@@ -4,9 +4,9 @@ import datetime
 import matplotlib.pyplot as plt
 
 # MODI 모듈의 번들을 연결하기 위해, MODI 객체를 인스턴스화합니다.
-# bundle = modi.MODI()
+bundle = modi.MODI()
 a=[]
-# ultrasonic = bundle.ultrasonics[0]
+ultrasonic = bundle.ultrasonics[0]
 num_sign=0
 big_gradient1=0
 big_gradient2=0
@@ -22,10 +22,12 @@ break_count=0
 i=-1
 data = []
 
+prev = datetime.datetime.now()
+
 while True:
     time.sleep(0.05)
-    # ultrasonic_distance = ultrasonic.distance
-    a.append(1)
+    ultrasonic_distance = ultrasonic.distance
+    a.append(ultrasonic_distance)
     i+=1
     if num_sign<0:
         num_sign=0
@@ -35,10 +37,16 @@ while True:
         continue
     
     # 파일 생성
-    f = open("IOT/iot.csv", 'a')
-    now = str(datetime.datetime.now())
-    f.write(now + ',' + str(num_sign)  + "\n")
-    f.close()
+    f1 = open("IOT/iot.csv", 'a')
+    now = datetime.datetime.now()
+    f1.write(str(now) + ',' + str(num_sign)  + "\n")
+    f1.close()
+    
+    if prev.second != now.second:
+        prev = now
+        f2 = open("IOT/graph.csv", 'a')
+        f2.write(str(now) + ',' + str(num_sign)  + "\n")
+        f2.close()
 
     if abs(a[i-1]-a[i])>=2:
         break_count=0

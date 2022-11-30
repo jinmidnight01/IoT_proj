@@ -1,6 +1,6 @@
 import datetime
-import matplotlib.pyplot as plt
 import modi
+import time
 
 my_list = []
 
@@ -14,16 +14,15 @@ data = []
 
 # 대상과의 거리를 측정한 값을 0 ~ 100 사이로 환산하여 반환합니다.
 while True:
-    f = open("IOT/iot.csv", 'a')
+    time.sleep(0.02)
+    f = open("IOT/distance.csv", 'a')
     ultrasonic_distance = str(ultrasonic.distance)
     print(ultrasonic_distance)
     now = str(datetime.datetime.now())
     f.write(now + ',' + ultrasonic_distance  + "\n")
     f.close()
     data.append(ultrasonic.distance)
-    plt.plot(data)
-    plt.pause(0.001)
-plt.show()
+
 
 
 

@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(Congression)
 admin.site.register(Eat)
+admin.site.register(Menu)

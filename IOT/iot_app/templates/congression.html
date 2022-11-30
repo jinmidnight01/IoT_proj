@@ -96,14 +96,16 @@
             </a>
         </div>
         <div style="position:relative;display:flex;flex-direction:column;background-color:#A278F4; color:white;height:170px; width: 260px;margin: 0 auto;border:3px solid #A278F4;border-radius:20px; padding:15px 20px;">
-            <a href="{% url 'delete' %}" style="cursor:pointer;position:absolute;left:210px;top:18px">
+            <div style="cursor:pointer;position:absolute;left:210px;top:18px">
                 <div style="display:flex;flex-direction:row-reverse; width:70px;">
                     <img src="{% static 'reload.png' %}" style="margin-left:13px;" onclick="reload()" width="31px" height="31px">
-                    {% if user.is_authenticated %}  
-                    <img src="{% static 'trash.png' %}" width="28px" height="28px">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'delete' %}">
+                        <img src="{% static 'trash.png' %}" width="28px" height="28px">
+                    </a>
                     {% endif %}
                 </div>
-            </a>
+            </div>
 
             {% if iot_first %}
                 <span style="text-align:center; margin:auto;font-size:60px;line-height:60px;">{{iot_first.num}}<span style="font-size: 42px; font-weight:bold; margin-left:5px;">%</span></span>
@@ -116,7 +118,7 @@
                         {% if iot_first %}
                         <span id="p_num">{{iot_first.num}}</span>명 /
                         {% else %}
-                        <span id="p_num">1</span>명 /
+                        <span id="p_num">0</span>명 /
                         {% endif %}
                         <span id="t_num">100</span>명
                     </span>
@@ -131,7 +133,7 @@
         </div>
         <div class="content">
             <section class="active">
-                <div style="display:flex;justify-content:space-between;margin-top:3px">
+                <div style="display:flex;justify-content:space-between;margin-top:5px">
                     <div>
                         <span style="font-family:'Lora'; font-size:16px;font-weight:bold;">{{eat_first.eat_count}}명 가능 중...</span>
                         <img src="{% static 'shoe.png' %}" width="18px" height="18px">    
@@ -145,6 +147,24 @@
                         <a href="{% url 'eat_minus' %}">취소</a>
                     </button>
                     {% endif %}
+                </div>
+                <div style="margin-top:20px">
+                    <div style="display:flex;">
+                        <img src="{% static 'lunch.png' %}" style="width:22px; height:22px">
+                        <div style="font-family:'Lora'; font-size:16px;font-weight:bold;margin-bottom:5px">&nbsp;중식(2층)</div>
+                    </div>
+                    <div>
+                        {{today_menu.lunch}}
+                    </div>
+                </div>
+                <div style="margin-top:20px">
+                    <div style="display:flex;">
+                        <img src="{% static 'dinner.png' %}" style="width:22px; height:22px">
+                        <div style="font-family:'Lora'; font-size:16px;font-weight:bold;margin-bottom:5px">&nbsp;석식(2층)</div>
+                    </div>
+                    <div>
+                        {{today_menu.dinner}}
+                    </div>
                 </div>
             </section>
             <section>
