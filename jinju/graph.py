@@ -17,9 +17,11 @@ with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\result.csv','r') as c
         x.append(row[0][-16:21])
         y.append(sum)
   
-plt.bar(x, y, color = 'g', width = 0.72, label = "Visualize")
+fig, ax = plt.subplots()
+ax.plot(x, y, linewidth = 0.72, label = "Visualize")
 plt.xlabel('time')
 plt.ylabel('distance')
 plt.title('visualization')
-plt.legend()
+ax.legend()
 plt.show()
+plt.savefig('Name.png')
