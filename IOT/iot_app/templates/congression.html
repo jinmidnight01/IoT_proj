@@ -128,8 +128,8 @@
         
         <div class="nav">
             <div class="item active">Food Menu</div>
-            <div class="item" onclick=date()>Today Graph</div>
-            <div class="item">Daily Graph</div>
+            <div class="item" onclick=todayGraph()>Today Graph</div>
+            <div class="item" onclick=DailyGraph()>Daily Graph</div>
         </div>
         <div class="content">
             <section class="active">
@@ -167,13 +167,12 @@
                     </div>
                 </div>
             </section>
-            <section style="display:flex;flex-direction:column;align-content:center">
-                <div id="presentDate" style="margin-top:10px;font-weight:bold;font-family:'Lora'; font-size:25px;text-align:center">0</div>
-                <img src="{% static '11_30.png' %}" width="350px">
+            <section style="margin-top:0;display:flex;justify-content:center">
+                <img id="todayGraph" src="" alt="" width="350px">
             </section>
-            <section style="display:flex;flex-direction:column;align-content:center">
-                <div style="margin-top:18px;display:flex;justify-content:center">
-                    <select>
+            <section style="display:flex;flex-direction:column;justify-content:center">
+                <div style="margin:18px 0 5px 0;display:flex;justify-content:center">
+                    <select name="selYear">
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>
                         <option value="2020">2020</option>
@@ -197,7 +196,7 @@
                         <option value="2002">2002</option>
                         <option value="2001">2001</option>
                     </select>
-                    <select>
+                    <select name="selMonth">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -211,7 +210,7 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <select>
+                    <select name="selDay">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -244,9 +243,9 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <img id="search" src="{% static 'search.png' %}">
+                    <button style="margin-top:2px;background:transparent;border:0;cursor:pointer" onclick="search()"><img id="search" src="{% static 'search.png' %}"></button>
                 </div>
-                <img src="{% static '11_30.png' %}" width="350px">
+                <img src="" id="dailyGraph" alt="" width="350px">
 
             </section>
         </div>
@@ -257,13 +256,51 @@
         crossorigin="anonymous">
         </script>
         <script>
+            function DailyGraph() {
+                let today = new Date();   
+
+                let year = today.getFullYear(); // 년도
+                let month = today.getMonth() + 1;  // 월
+                let date = today.getDate();  // 날짜
+
+                $('select[name=selYear] option[value='+year+']').attr("selected",true);
+                $('select[name=selMonth] option[value='+month+']').attr("selected",true);
+                $('select[name=selDay] option[value='+date+']').attr("selected",true);
+                document.getElementById("dailyGraph").src = "/static/"+year+month+date+".png";
+
+            }
+            function search() {
+                const year = $("select[name=selYear]").val();
+                const month = $("select[name=selMonth]").val();
+                const day = $("select[name=selDay]").val();
+                document.getElementById("dailyGraph").src = "/static/"+year+month+day+".png";
+
+            }
+            function todayGraph(){
+                let today = new Date();   
+
+                let year = today.getFullYear(); // 년도
+                let month = today.getMonth() + 1;  // 월
+                let date = today.getDate();  // 날짜
+                document.getElementById("todayGraph").src = "/static/"+year+month+date+".png";
+
+            }
+
+            function ChnImg(){
+                let today = new Date();   
+
+                let year = today.getFullYear(); // 년도
+                let month = today.getMonth() + 1;  // 월
+                let date = today.getDate();  // 날짜
+                document.getElementById("imgId").src = "/static/"+year+month+date+".png";
+
+            }
             function date() {
                 let today = new Date();   
 
                 let year = today.getFullYear(); // 년도
                 let month = today.getMonth() + 1;  // 월
                 let date = today.getDate();  // 날짜
-                let day = today.getDay();  // 요일
                 
                 str = year + '/' + month + '/' + date
                 document.getElementById('presentDate').innerHTML = str

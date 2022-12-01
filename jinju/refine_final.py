@@ -474,7 +474,7 @@ for i in data.analyzed_data:
 
 file.close()
 
-f2 = open("result.csv", 'w')
-for i in data.analyzed_data:
-    f2.write(str(i)+'\n')
-f2.close()
+# f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv", 'w')
+# for i in data.analyzed_data:
+#     f2.write(str(i)+'\n')
+# f2.close()

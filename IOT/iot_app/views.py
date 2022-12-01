@@ -6,73 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import os
 import datetime
-import matplotlib.pyplot as plt
 import csv
-# from .refine_final import Mentos
-import numpy as np
-import matplotlib.ticker as mticker  
-
-# # 그래프 추출
-# data = Mentos()
-
-# # 1. total data graph
-# x = []
-# y = []
-
-# with open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv",'r') as csvfile:
-#     plots = csv.reader(csvfile, delimiter = ',')
-    
-#     for row in plots:
-#         x.append(row[0])
-#         y.append(float(row[1]))
-
-# data.abstract()
-
-# # 2. abstracted data graph
-# x = []
-# y = []
-# n=0
-
-# for group in data.abstracted_data :
-#     for date_distance in group:
-#         x.append(date_distance[0])
-#         y.append(float(date_distance[1]))
-#     for i in range(3): # to check the group
-#         x.append(str(n))
-#         y.append(0)
-#         n += 1
-        
-# data.merge()
-
-# # 3. merged data graph
-# x = []
-# y = []
-
-# for group in data.abstracted_data :
-#     for date_distance in group:
-#         x.append(date_distance[0])
-#         y.append(float(date_distance[1]))
-        
-# data.trim()
-
-# # 4. trimmed data graph
-# x = []
-# y = []
-# n = 0
-
-# for group in data.trimmed_data :
-#     for date_distance in group:
-#         x.append(date_distance[0])
-#         y.append(float(date_distance[1]))
-#         # print(date_distance)
-#     for i in range(3): # to check the group
-#         x.append(str(n))
-#         y.append(0)
-#         n += 1
-#     # print()
-    
-# data.inout()
-
+import matplotlib.pyplot as plt
 
 # Create your views here.
 
@@ -137,47 +72,45 @@ def congression(request):
         except:
             pass
     
-    # # 그래프
-    # if os.path.isfile("result.csv"):
-    #     os.remove("result.csv")   
+    # 그래프
+    x = []
+    y = []
     
-    # for i in data.analyzed_data:
-    #     print(i)
-    
-    # f2 = open("result.csv", 'w')
-    # for i in data.analyzed_data:
-    #     f2.write(str(i)+'\n')
-    # f2.close()
-    
-    # x = []
-    # y = []
-    
-    # with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv','r') as csvfile:
-    #     plots = csv.reader(csvfile, delimiter = ',')
-    #     sum = 0
-    #     for row in plots:
-            
-    #         if row[1][2:-2]=='Exit' :
-    #             sum -= 1
-    #         elif row[1][2:-2]=='Enter':
-    #             sum += 1
-            
-    #         # print(row[1][1:-1])
-    #         x.append(row[0][-16:21])
-    #         if (sum >=0 ):
-    #             y.append(sum)
-    #         else:
-    #             sum = 0
-    
-    # fig, ax = plt.subplots()
-    # ax.plot(x, y, linewidth = 0.72)
-    # plt.xlabel('Time')
-    # plt.ylabel('Congression')
-    # plt.xticks(x)
-    # plt.yticks(y)
-    # # plt.gca().yaxis.set_major_formatter(mticker.FormatStrFormatter("%i"))
-    # # plt.title(str(datetime.datetime.now().year)+"/"+str(datetime.datetime.now().month) + "/" + str(datetime.datetime.now().day))
-    # plt.savefig('static/{name}.png'.format(name=str(datetime.datetime.now().month) + "_" + str(datetime.datetime.now().day)))
+    try:
+        with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv','r') as csvfile:
+            plots = csv.reader(csvfile, delimiter = ',')
+            sum = 0
+            for row in plots:
+                
+                if row[1][2:-2]=='Exit' :
+                    sum -= 1
+                elif row[1][2:-2]=='Enter':
+                    sum += 1
+                x.append(row[0][-16:21])
+                if sum >= 0:
+                    y.append(sum)
+                else: 
+                    y.append(0)
+                    sum = 0
+        
+        fig, ax = plt.subplots()
+        ax.plot(x, y, linewidth = 5, label="Congression", color="#A278F4")
+        
+        plt.xlabel('')
+        plt.ylabel('')
+
+        plt.xticks(x, fontsize=40, rotation=45)
+        plt.yticks(y, fontsize=40)
+        if datetime.datetime.now().day < 10:
+            day = "0"+str(datetime.datetime.now().day)
+        plt.title(str(datetime.datetime.now().year)+'/'+str(datetime.datetime.now().month)+'/'+day, fontsize=90, fontname="Inter", fontweight="bold")
+
+        ax.legend(fontsize=44)
+        # plt.show()
+        plt.rcParams["figure.figsize"] = [16,20]
+        plt.savefig('static/'+str(datetime.datetime.now().year)+str(datetime.datetime.now().month)+str(datetime.datetime.now().day)+'.png')
+    except:
+        pass
 
     # 객체 생성
     iot_first = Congression.objects.all().order_by('-created_at').first()
@@ -185,7 +118,7 @@ def congression(request):
     eat_first = Eat.objects.all().first()
     Eat.objects.all().delete()
     Eat.objects.create(eat_count=eat_first.eat_count).save()
-    today_menu = Menu.objects.all().first()
+    today_menu = Menu.objects.all().last()
 
     return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first, 'today_menu':today_menu})
 

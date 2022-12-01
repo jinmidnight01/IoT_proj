@@ -1,8 +1,5 @@
-import time
-import modi
-import datetime
-import matplotlib.pyplot as plt
 import csv
+import matplotlib.pyplot as plt
 
 MIN_FREQ = 10
 STRUCTURE_SIZE = 3 # memory size to store the data
@@ -306,15 +303,8 @@ class Mentos :
                         repeat = 0
                 previous_value = float(group[i][1])
 
-            try:
-                front_value_ratio = front_value/(front_value+rear_value)
-            except:
-                front_value_ratio = front_value
-
-            try:
-                rear_value_ratio = rear_value/(front_value+rear_value)
-            except:
-                rear_value_ratio = rear_value
+            front_value_ratio = front_value/(front_value+rear_value)
+            rear_value_ratio = rear_value/(front_value+rear_value)
             decrease_count_ratio = decrease_count/(decrease_count+increase_count)
             increase_count_ratio = increase_count/(decrease_count+increase_count)
             min_front_ratio = min_front_value/(min_front_value+min_rear_value)
@@ -384,257 +374,106 @@ class Mentos :
             else:
                 self.analyzed_data.append((group[i][0],'IDK'))
 
-# MODI 모듈의 번들을 연결하기 위해, MODI 객체를 인스턴스화합니다.
-bundle = modi.MODI()
-a=[]
-ultrasonic = bundle.ultrasonics[0]
-num_inout=[]
-num_sign=0
-big_gradient1=0
-big_gradient2=0
-big_gradient3=0
-big_gradient4=0
-big_gradient5=0
-small_gradient1=0
-small_gradient2=0
-small_gradient3=0
-small_gradient4=0
-small_gradient5=0
-break_count=0
-index=-1
-flag = 0
+while True:                
+    data = Mentos()
 
-# 측정 프로그램 시작
-while True:
-    time.sleep(0.05)
-    ultrasonic_distance = ultrasonic.distance
-    #print('ultrasonic_distance:', ultrasonic_distance)
-    a.append(ultrasonic_distance)
-    index+=1
-    if num_sign<0:
-        num_sign=0
+    # 1. total data graph
+    x = []
+    y = []
+
+    with open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv",'r') as csvfile:
+        plots = csv.reader(csvfile, delimiter = ',')
         
-    print(num_sign)
-    if index<30:
-        num_inout.append(num_sign)
-        continue
-    
-    # iot.csv 파일 생성
-    f1 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\iot.csv", 'a')
-    now = datetime.datetime.now()
-    f1.write(str(now) + ',' + str(num_sign)  + "\n")
-    f1.close()
-    
-    
-    # 인우님 알고리즘: 실시간 혼잡도
-    if abs(a[index-1]-a[index])>=2:
-        break_count=0
-        if big_gradient1<a[index]-a[index-1]:
-            big_gradient5=big_gradient4
-            big_gradient4=big_gradient3
-            big_gradient3=big_gradient2
-            big_gradient2=big_gradient1
-            big_gradient1=a[index]-a[index-1]
-        else:
-            if big_gradient2<a[index]-a[index-1]:
-                big_gradient5=big_gradient4
-                big_gradient4=big_gradient3
-                big_gradient3=big_gradient2
-                big_gradient2=a[index]-a[index-1]
-            elif big_gradient3<a[index]-a[index-1]:
-                big_gradient5=big_gradient4
-                big_gradient4=big_gradient3
-                big_gradient3=a[index]-a[index-1]
-            elif big_gradient4<a[index]-a[index-1]:
-                big_gradient5=big_gradient4
-                big_gradient4=a[index]-a[index-1]
-            elif big_gradient5<a[index]-a[index-1]:
-                big_gradient5=a[index]-a[index-1]
+        for row in plots:
+            x.append(row[0])
+            y.append(float(row[1]))
 
-        if small_gradient1>a[index]-a[index-1]:
-            small_gradient5=small_gradient4
-            small_gradient4=small_gradient3
-            small_gradient3=small_gradient2
-            small_gradient2=small_gradient1
-            small_gradient1=a[index]-a[index-1]
-        else:
-            if small_gradient2>a[index]-a[index-1]:
-                small_gradient5=small_gradient4
-                small_gradient4=small_gradient3
-                small_gradient3=small_gradient2
-                small_gradient2=a[index]-a[index-1]
-            elif small_gradient3>a[index]-a[index-1]:
-                small_gradient5=small_gradient4
-                small_gradient4=small_gradient3
-                small_gradient3=a[index]-a[index-1]
-            elif small_gradient4>a[index]-a[index-1]:
-                small_gradient5=small_gradient4
-                small_gradient4=a[index]-a[index-1]
-            elif small_gradient5>a[index]-a[index-1]:
-                small_gradient5=a[index]-a[index-1]
+    # plt.bar(x, y, color = 'g', width = 0.72, label = "Visualize")
+    # plt.xlabel('time')
+    # plt.ylabel('distance')
+    # plt.title('visualization')
+    # plt.legend()
+    # plt.show()
 
+    data.abstract()
 
-    if abs(a[index-1]-a[index])<2:
-        break_count+=1
+    # 2. abstracted data graph
+    x = []
+    y = []
+    n=0
 
-    #print(big_gradient1, big_gradient2,big_gradient3,big_gradient4,big_gradient5,
-    #      small_gradient1, small_gradient2,small_gradient3,small_gradient4,small_gradient5 ,num_sign)
-    if break_count>7:
-        break_count=0
-        if small_gradient2==0 or big_gradient2==0:
-            small_gradient2=0
-            big_gradient2=0
-        if small_gradient3==0 or big_gradient3==0:
-            small_gradient3=0
-            big_gradient3=0
-        if small_gradient4==0 or big_gradient4==0:
-            small_gradient4=0
-            big_gradient4=0
-        if small_gradient5==0 or big_gradient5==0:
-            small_gradient5=0
-            big_gradient5=0
-
-        if abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5>abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5:
-            #print(abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5,
-            #      abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5)
-            num_sign+=1
-            big_gradient1=0
-            big_gradient2=0
-            big_gradient3=0
-            big_gradient4=0
-            big_gradient5=0
-            small_gradient1=0
-            small_gradient2=0
-            small_gradient3=0
-            small_gradient4=0
-            small_gradient5=0
+    for group in data.abstracted_data :
+        for date_distance in group:
+            x.append(date_distance[0])
+            y.append(float(date_distance[1]))
+        for i in range(3): # to check the group
+            x.append(str(n))
+            y.append(0)
+            n += 1
             
-            for jndex in range(1,7):
-                num_inout[index-jndex]=num_sign
-        elif abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5<abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5:
-            #print(abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5,
-            #      abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5)
-            num_sign-=1
-            big_gradient1=0
-            big_gradient2=0
-            big_gradient3=0
-            big_gradient4=0
-            big_gradient5=0
-            small_gradient1=0
-            small_gradient2=0
-            small_gradient3=0
-            small_gradient4=0
-            small_gradient5=0
-            
-            for jndex in range(1,7):
-                num_inout[index-jndex]=num_sign
-        else:
-            #print(abs(1.1*big_gradient1+big_gradient2+big_gradient3)/3,abs(1.1*small_gradient1+small_gradient2+small_gradient3)/3)
-            big_gradient1=0
-            big_gradient2=0
-            big_gradient3=0
-            big_gradient4=0
-            big_gradient5=0
-            small_gradient1=0
-            small_gradient2=0
-            small_gradient3=0
-            small_gradient4=0
-            small_gradient5=0
+    # plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
+    # plt.xlabel('time')
+    # plt.ylabel('distance')
+    # plt.title('visualization')
+    # plt.legend()
+    # plt.show()
 
-    num_inout.append(num_sign)
+    data.merge()
 
-    # distance.csv 파일 생성
-    f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv", 'a')
-    f2.write(str(now) + ',' + str(ultrasonic_distance)  + "\n")
+    # 3. merged data graph
+    x = []
+    y = []
+    n=0
+
+    for group in data.abstracted_data :
+        for date_distance in group:
+            x.append(date_distance[0])
+            y.append(float(date_distance[1]))
+        for i in range(3): # to check the group
+            x.append(str(n))
+            y.append(0)
+            n += 1  
+        
+    # plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
+    # plt.xlabel('time')
+    # plt.ylabel('distance')
+    # plt.title('visualization')
+    # plt.legend()
+    # plt.show()
+
+    data.trim()
+
+    # 4. trimmed data graph
+    x = []
+    y = []
+    n = 0
+
+    for group in data.trimmed_data :
+        for date_distance in group:
+            x.append(date_distance[0])
+            y.append(float(date_distance[1]))
+            # print(date_distance)
+        for i in range(3): # to check the group
+            x.append(str(n))
+            y.append(0)
+            n += 1
+        # print()
+        
+    # plt.bar(x, y, color = 'g', width = 0.72, label = "distance")
+    # plt.xlabel('time')
+    # plt.ylabel('distance')
+    # plt.title('visualization')
+    # plt.legend()
+    # plt.show()
+
+    data.inout()
+
+    # for i in range(0,len(data.analyzed_data)):
+    #     if data.analyzed_data[i] not in data.analyzed_data[0:i]:
+    #         print(data.analyzed_data[i])
+
+    f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv", 'w')
+    for i in range(0,len(data.analyzed_data)):
+        if data.analyzed_data[i] not in data.analyzed_data[0:i]:
+            f2.write(str(data.analyzed_data[i])+'\n')
     f2.close()
-
-
-    # 진주님 알고리즘: 그래프 그리기
-    if flag % 50 == 0:
-        
-        data = Mentos()
-
-        # 1. total data graph
-        x = []
-        y = []
-
-        with open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv",'r') as csvfile:
-            plots = csv.reader(csvfile, delimiter = ',')
-            
-            for row in plots:
-                x.append(row[0])
-                y.append(float(row[1]))
-
-        data.abstract()
-
-        # # 2. abstracted data graph
-        x = []
-        y = []
-        n=0
-
-        for group in data.abstracted_data :
-            for date_distance in group:
-                if date_distance[0] not in x:
-                    x.append(date_distance[0])
-                    y.append(float(date_distance[1]))
-            for i in range(3): # to check the group
-                x.append(str(n))
-                y.append(0)
-                n += 1
-                
-        data.merge()
-
-        # # 3. merged data graph
-        x = []
-        y = []
-        n=0
-
-        for group in data.abstracted_data :
-            for date_distance in group:
-                if date_distance[0] not in x:
-                    x.append(date_distance[0])
-                    y.append(float(date_distance[1]))
-            for i in range(3): # to check the group
-                x.append(str(n))
-                y.append(0)
-                n += 1  
-            
-        data.trim()
-
-        # # 4. trimmed data graph
-        x = []
-        y = []
-        n = 0
-
-        for group in data.trimmed_data :
-            for date_distance in group:
-                if date_distance[0] not in x:
-                    x.append(date_distance[0])
-                    y.append(float(date_distance[1]))
-                    # print(date_distance)
-            for i in range(3): # to check the group
-                x.append(str(n))
-                y.append(0)
-                n += 1
-            # print()
-            
-        data.inout()
-        
-        x = []
-        y = []
-        temp = []
-        
-        for date_distance in data.analyzed_data:
-            if date_distance[0] not in x:
-                x.append(date_distance[0])
-                y.append(date_distance[1])
-        
-        result = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv", 'w')
-        for i in range(len(x)):
-            temp = []
-            temp.append(x[i])
-            temp.append(y[i])
-            result.write(str(tuple(temp))+'\n')
-        result.close()
-        
-    flag += 1
