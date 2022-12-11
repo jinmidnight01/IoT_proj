@@ -10,6 +10,8 @@ python -m venv venv
 3. 필요한 모듈 설치
 pip install -r requirements.txt
 
+
+
 # 웹 구동
 
 1. 웹 폴더로 이동
@@ -26,6 +28,8 @@ python manage.py runserver
 아래에서 두 번째 줄에 있는 "http://127.0.0.1:8000/" 를 "Ctrl + 마우스클릭"
 
 5. 완료
+
+
 
 # Modi 초음파 센서 구동
 
