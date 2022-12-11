@@ -1,0 +1,18 @@
+<가상환경 키기>
+. venv/Scripts/activate
+
+<업로드>
+git add .
+git commit -m "메세지"
+git push origin master
+
+<다운로드>
+git pull origin master
+
+<모듈 설치>
+pip freeze > requirements.txt(업로드용)
+pip install -r requirements.txt(다운로드용)
+
+<처음>
+git config --global user.email "본인메일"
+git config --gloabl user.name "본인이름
