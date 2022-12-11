@@ -4,8 +4,8 @@
 python -m venv venv
 
 2. 가상환경 키기
-(window) source venv/Scripts/activate
-(mac) source venv/bin/activate
+- (window) source venv/Scripts/activate
+- (mac) source venv/bin/activate
 
 3. 필요한 모듈 설치
 pip install -r requirements.txt
