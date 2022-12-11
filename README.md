@@ -1,16 +1,18 @@
 # 환경 세팅
 
-1. 가상환경 설치: 터미널에 입력
+1. 터미널 켜기
+<br/>
+
+2. 가상환경 설치
 - python -m venv venv
 <br/>
 
-2. 가상환경 켜기
+3. 가상환경 켜기
 - (window) source venv/Scripts/activate
 - (mac) source venv/bin/activate
-
 <br/>
 
-3. 필요한 모듈 설치
+4. 필요한 모듈 설치
 - pip install -r requirements.txt
 <br/>
 
