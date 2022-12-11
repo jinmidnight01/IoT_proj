@@ -2,7 +2,7 @@
 
 1. 가상환경 설치
 - python -m venv venv
-
+:-
 2. 가상환경 켜기
 - (window) source venv/Scripts/activate
 - (mac) source venv/bin/activate
