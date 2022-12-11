@@ -39,7 +39,7 @@
 5. 완료
 <br/>
 
-* 웹 종료시: Ctrl + c
+6. 웹 종료시: Ctrl + c
 <br/>
 
 # Modi 초음파 센서 구동
@@ -55,4 +55,4 @@
 - python congression.py
 <br/>
 
-* 웹 종료시: Ctrl + c
+4. 센서 작동 종료시: Ctrl + c
