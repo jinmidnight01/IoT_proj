@@ -8,6 +8,7 @@ import os
 import datetime
 import matplotlib.pyplot as plt
 <<<<<<< HEAD
+<<<<<<< HEAD
 import matplotlib.ticker as mtick
 =======
 import csv
@@ -77,6 +78,9 @@ import matplotlib.ticker as mticker
 # data.inout()
 
 >>>>>>> parent of 8a317cd (구현 모두 완료)
+=======
+import matplotlib.ticker as mtick
+>>>>>>> 6a2eedb5284d90d7a23c92cb6da17ca0d4c83bf4
 
 
 def home(request):
@@ -145,6 +149,9 @@ def congression(request):
     #     os.remove("result.csv")   
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6a2eedb5284d90d7a23c92cb6da17ca0d4c83bf4
     if os.path.isfile("../result.csv"):
         with open(r"../result.csv",'r') as csvfile:
             plots = csv.reader(csvfile, delimiter = ',')
@@ -181,6 +188,7 @@ def congression(request):
         # plt.show()
         plt.rcParams["figure.figsize"] = [16,20]
         plt.savefig('static/'+str(datetime.datetime.now().year)+str(datetime.datetime.now().month)+str(datetime.datetime.now().day)+'.png')
+<<<<<<< HEAD
 =======
     # for i in data.analyzed_data:
     #     print(i)
@@ -220,6 +228,8 @@ def congression(request):
     # # plt.title(str(datetime.datetime.now().year)+"/"+str(datetime.datetime.now().month) + "/" + str(datetime.datetime.now().day))
     # plt.savefig('static/{name}.png'.format(name=str(datetime.datetime.now().month) + "_" + str(datetime.datetime.now().day)))
 >>>>>>> parent of 8a317cd (구현 모두 완료)
+=======
+>>>>>>> 6a2eedb5284d90d7a23c92cb6da17ca0d4c83bf4
 
     # 객체 생성
     iot_first = Congression.objects.all().order_by('-created_at').first()
@@ -227,7 +237,11 @@ def congression(request):
     eat_first = Eat.objects.all().first()
     Eat.objects.all().delete()
     Eat.objects.create(eat_count=eat_first.eat_count).save()
+<<<<<<< HEAD
     today_menu = Menu.objects.all().first()
+=======
+    today_menu = Menu.objects.all().last()
+>>>>>>> 6a2eedb5284d90d7a23c92cb6da17ca0d4c83bf4
 
     if (datetime.datetime.today().weekday() < 5):
         return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first, 'today_menu':today_menu})

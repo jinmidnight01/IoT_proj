@@ -410,10 +410,14 @@ prev = datetime.datetime.now()
 while True:
     time.sleep(0.05)
     ultrasonic_distance = ultrasonic.distance
+<<<<<<< HEAD
 <<<<<<< HEAD:congression.py
     # print(ultrasonic_distance)
 =======
 >>>>>>> parent of 8a317cd (구현 모두 완료):IOT/congression.py
+=======
+    # print(ultrasonic_distance)
+>>>>>>> 6a2eedb5284d90d7a23c92cb6da17ca0d4c83bf4
     a.append(ultrasonic_distance)
     i+=1
     if num_sign<0:
@@ -423,8 +427,13 @@ while True:
     if i<30:
         continue
     
+<<<<<<< HEAD
     # distance.csv 파일 생성
     f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv", 'a')
+=======
+    # iot.csv 파일 생성
+    f1 = open(r".\iot.csv", 'a')
+>>>>>>> 6a2eedb5284d90d7a23c92cb6da17ca0d4c83bf4
     now = datetime.datetime.now()
     f2.write(str(now) + ',' + str(ultrasonic_distance)  + "\n")
     f2.close()
