@@ -2,6 +2,7 @@ import time
 import modi
 import datetime
 import matplotlib.pyplot as plt
+<<<<<<< HEAD:congression.py
 import csv
 
 MIN_FREQ = 10
@@ -62,7 +63,7 @@ class Mentos :
         repeat_count = 0 # to determine whether it's fixed or minimum/maximum
         state = 0 # to remember the previous gradient of the graph
         prev_distance = 0
-        file = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv",'r')
+        file = open(r".\distance.csv",'r')
         line = csv.reader(file)
         for time_distance in line :
             # store the data in the structure
@@ -383,12 +384,13 @@ class Mentos :
                 self.analyzed_data.append((group[i][0],'Exit'))
             else:
                 self.analyzed_data.append((group[i][0],'IDK'))
+=======
+>>>>>>> parent of 8a317cd (구현 모두 완료):IOT/congression.py
 
 # MODI 모듈의 번들을 연결하기 위해, MODI 객체를 인스턴스화합니다.
 bundle = modi.MODI()
 a=[]
 ultrasonic = bundle.ultrasonics[0]
-num_inout=[]
 num_sign=0
 big_gradient1=0
 big_gradient2=0
@@ -401,84 +403,93 @@ small_gradient3=0
 small_gradient4=0
 small_gradient5=0
 break_count=0
-index=-1
-flag = 0
+i=-1
 
-# 측정 프로그램 시작
+prev = datetime.datetime.now()
+
 while True:
     time.sleep(0.05)
     ultrasonic_distance = ultrasonic.distance
-    #print('ultrasonic_distance:', ultrasonic_distance)
+<<<<<<< HEAD:congression.py
+    # print(ultrasonic_distance)
+=======
+>>>>>>> parent of 8a317cd (구현 모두 완료):IOT/congression.py
     a.append(ultrasonic_distance)
-    index+=1
+    i+=1
     if num_sign<0:
         num_sign=0
-        
+
     print(num_sign)
-    if index<30:
-        num_inout.append(num_sign)
+    if i<30:
         continue
     
-    # iot.csv 파일 생성
-    f1 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\iot.csv", 'a')
+    # distance.csv 파일 생성
+    f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv", 'a')
     now = datetime.datetime.now()
+    f2.write(str(now) + ',' + str(ultrasonic_distance)  + "\n")
+    f2.close()
+
+    # iot.csv 파일 생성
+<<<<<<< HEAD:congression.py
+    f1 = open(r".\iot.csv", 'a')
+    now = datetime.datetime.now()
+=======
+    f1 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\iot.csv", 'a')
+>>>>>>> parent of 8a317cd (구현 모두 완료):IOT/congression.py
     f1.write(str(now) + ',' + str(num_sign)  + "\n")
     f1.close()
     
-    
-    # 인우님 알고리즘: 실시간 혼잡도
-    if abs(a[index-1]-a[index])>=2:
+    # 실시간 알고리즘
+    if abs(a[i-1]-a[i])>=2:
         break_count=0
-        if big_gradient1<a[index]-a[index-1]:
+        if big_gradient1<a[i]-a[i-1]:
             big_gradient5=big_gradient4
             big_gradient4=big_gradient3
             big_gradient3=big_gradient2
             big_gradient2=big_gradient1
-            big_gradient1=a[index]-a[index-1]
+            big_gradient1=a[i]-a[i-1]
         else:
-            if big_gradient2<a[index]-a[index-1]:
+            if big_gradient2<a[i]-a[i-1]:
                 big_gradient5=big_gradient4
                 big_gradient4=big_gradient3
                 big_gradient3=big_gradient2
-                big_gradient2=a[index]-a[index-1]
-            elif big_gradient3<a[index]-a[index-1]:
+                big_gradient2=a[i]-a[i-1]
+            elif big_gradient3<a[i]-a[i-1]:
                 big_gradient5=big_gradient4
                 big_gradient4=big_gradient3
-                big_gradient3=a[index]-a[index-1]
-            elif big_gradient4<a[index]-a[index-1]:
+                big_gradient3=a[i]-a[i-1]
+            elif big_gradient4<a[i]-a[i-1]:
                 big_gradient5=big_gradient4
-                big_gradient4=a[index]-a[index-1]
-            elif big_gradient5<a[index]-a[index-1]:
-                big_gradient5=a[index]-a[index-1]
+                big_gradient4=a[i]-a[i-1]
+            elif big_gradient5<a[i]-a[i-1]:
+                big_gradient5=a[i]-a[i-1]
 
-        if small_gradient1>a[index]-a[index-1]:
+        if small_gradient1>a[i]-a[i-1]:
             small_gradient5=small_gradient4
             small_gradient4=small_gradient3
             small_gradient3=small_gradient2
             small_gradient2=small_gradient1
-            small_gradient1=a[index]-a[index-1]
+            small_gradient1=a[i]-a[i-1]
         else:
-            if small_gradient2>a[index]-a[index-1]:
+            if small_gradient2>a[i]-a[i-1]:
                 small_gradient5=small_gradient4
                 small_gradient4=small_gradient3
                 small_gradient3=small_gradient2
-                small_gradient2=a[index]-a[index-1]
-            elif small_gradient3>a[index]-a[index-1]:
+                small_gradient2=a[i]-a[i-1]
+            elif small_gradient3>a[i]-a[i-1]:
                 small_gradient5=small_gradient4
                 small_gradient4=small_gradient3
-                small_gradient3=a[index]-a[index-1]
-            elif small_gradient4>a[index]-a[index-1]:
+                small_gradient3=a[i]-a[i-1]
+            elif small_gradient4>a[i]-a[i-1]:
                 small_gradient5=small_gradient4
-                small_gradient4=a[index]-a[index-1]
-            elif small_gradient5>a[index]-a[index-1]:
-                small_gradient5=a[index]-a[index-1]
+                small_gradient4=a[i]-a[i-1]
+            elif small_gradient5>a[i]-a[i-1]:
+                small_gradient5=a[i]-a[i-1]
 
 
-    if abs(a[index-1]-a[index])<2:
+    if abs(a[i-1]-a[i])<2:
         break_count+=1
 
-    #print(big_gradient1, big_gradient2,big_gradient3,big_gradient4,big_gradient5,
-    #      small_gradient1, small_gradient2,small_gradient3,small_gradient4,small_gradient5 ,num_sign)
     if break_count>7:
         break_count=0
         if small_gradient2==0 or big_gradient2==0:
@@ -495,8 +506,6 @@ while True:
             big_gradient5=0
 
         if abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5>abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5:
-            #print(abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5,
-            #      abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5)
             num_sign+=1
             big_gradient1=0
             big_gradient2=0
@@ -509,11 +518,7 @@ while True:
             small_gradient4=0
             small_gradient5=0
             
-            for jndex in range(1,7):
-                num_inout[index-jndex]=num_sign
         elif abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5<abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5:
-            #print(abs(big_gradient1+big_gradient2+big_gradient3+0.95*big_gradient4+0.95*big_gradient5)/5,
-            #      abs(small_gradient1+small_gradient2+small_gradient3+0.95*small_gradient4+0.95*small_gradient5)/5)
             num_sign-=1
             big_gradient1=0
             big_gradient2=0
@@ -526,10 +531,7 @@ while True:
             small_gradient4=0
             small_gradient5=0
             
-            for jndex in range(1,7):
-                num_inout[index-jndex]=num_sign
         else:
-            #print(abs(1.1*big_gradient1+big_gradient2+big_gradient3)/3,abs(1.1*small_gradient1+small_gradient2+small_gradient3)/3)
             big_gradient1=0
             big_gradient2=0
             big_gradient3=0
@@ -539,18 +541,19 @@ while True:
             small_gradient2=0
             small_gradient3=0
             small_gradient4=0
+<<<<<<< HEAD:congression.py
             small_gradient5=0
 
     num_inout.append(num_sign)
 
     # distance.csv 파일 생성
-    f2 = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv", 'a')
+    f2 = open(r".\distance.csv", 'a')
     f2.write(str(now) + ',' + str(ultrasonic_distance)  + "\n")
     f2.close()
 
 
-    # 진주님 알고리즘: 그래프 그리기
-    if flag % 50 == 0:
+    # # 진주님 알고리즘: 그래프 그리기
+    if flag % 100 == 0:
         
         data = Mentos()
 
@@ -558,7 +561,7 @@ while True:
         x = []
         y = []
 
-        with open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\distance.csv",'r') as csvfile:
+        with open(r".\distance.csv",'r') as csvfile:
             plots = csv.reader(csvfile, delimiter = ',')
             
             for row in plots:
@@ -629,7 +632,7 @@ while True:
                 x.append(date_distance[0])
                 y.append(date_distance[1])
         
-        result = open(r"C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv", 'w')
+        result = open(r".\result.csv", 'w')
         for i in range(len(x)):
             temp = []
             temp.append(x[i])
@@ -638,3 +641,6 @@ while True:
         result.close()
         
     flag += 1
+=======
+            small_gradient5=0
+>>>>>>> parent of 8a317cd (구현 모두 완료):IOT/congression.py
