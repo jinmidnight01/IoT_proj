@@ -154,7 +154,11 @@
                         <div style="font-family:'Lora'; font-size:16px;font-weight:bold;margin-bottom:5px">&nbsp;중식(2층)</div>
                     </div>
                     <div>
+                        {% if today_menu %}
                         {{today_menu.lunch}}
+                        {% else %}
+                        <div>해당 요일은 식당 운영을 하지 않습니다.</div>
+                        {% endif %}
                     </div>
                 </div>
                 <div style="margin-top:20px">
@@ -163,7 +167,11 @@
                         <div style="font-family:'Lora'; font-size:16px;font-weight:bold;margin-bottom:5px">&nbsp;석식(2층)</div>
                     </div>
                     <div>
+                        {% if today_menu %}
                         {{today_menu.dinner}}
+                        {% else %}
+                        <div>해당 요일은 식당 운영을 하지 않습니다.</div>
+                        {% endif %}
                     </div>
                 </div>
             </section>

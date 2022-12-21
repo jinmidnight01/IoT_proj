@@ -8,8 +8,8 @@ import os
 import datetime
 import csv
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 
-# Create your views here.
 
 def home(request):
     return render(request, 'home.html')
@@ -17,11 +17,11 @@ def home(request):
 def congression(request):
 
     # 실시간 혼잡도
-    if os.path.isfile("iot.csv"):
+    if os.path.isfile("../iot.csv"):
         lst = []
         t = []
 
-        f = open("iot.csv", 'r')
+        f = open("../iot.csv", 'r')
 
         while True:
             line_data = f.readline().strip()
@@ -39,10 +39,10 @@ def congression(request):
             iot.save()
 
         f.close()
-        os.remove("iot.csv")
+        os.remove("../iot.csv")
         
     # 메뉴 크롤링
-    if Menu.objects.filter(created_at=datetime.date.today()).exists():
+    if Menu.objects.filter(created_at=datetime.date.today()).count() > 0:
         url = ""
     else:
         try:
@@ -53,7 +53,7 @@ def congression(request):
             options.headless = True
 
             # 셀레니움 업데이트 해야 함 (pip install -U selenium)
-            driver = webdriver.Firefox(options=options, executable_path="C:/Users/vkstk/OneDrive/바탕 화면/IoT_proj/IOT/geckodriver.exe")
+            driver = webdriver.Firefox(options=options, executable_path=r".\geckodriver.exe")
 
             driver.get(url)
             driver.implicitly_wait(3)
@@ -76,8 +76,8 @@ def congression(request):
     x = []
     y = []
     
-    try:
-        with open(r'C:\Users\vkstk\OneDrive\바탕 화면\IoT_proj\IOT\result.csv','r') as csvfile:
+    if os.path.isfile("../result.csv"):
+        with open(r"../result.csv",'r') as csvfile:
             plots = csv.reader(csvfile, delimiter = ',')
             sum = 0
             for row in plots:
@@ -101,16 +101,17 @@ def congression(request):
 
         plt.xticks(x, fontsize=40, rotation=45)
         plt.yticks(y, fontsize=40)
+        # ax.yaxis.set_major_formatter(mtick.PercentFormatter(1.0))
         if datetime.datetime.now().day < 10:
             day = "0"+str(datetime.datetime.now().day)
+        else:
+            day = str(datetime.datetime.now().day)
         plt.title(str(datetime.datetime.now().year)+'/'+str(datetime.datetime.now().month)+'/'+day, fontsize=90, fontname="Inter", fontweight="bold")
 
         ax.legend(fontsize=44)
         # plt.show()
         plt.rcParams["figure.figsize"] = [16,20]
         plt.savefig('static/'+str(datetime.datetime.now().year)+str(datetime.datetime.now().month)+str(datetime.datetime.now().day)+'.png')
-    except:
-        pass
 
     # 객체 생성
     iot_first = Congression.objects.all().order_by('-created_at').first()
@@ -120,13 +121,16 @@ def congression(request):
     Eat.objects.create(eat_count=eat_first.eat_count).save()
     today_menu = Menu.objects.all().last()
 
-    return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first, 'today_menu':today_menu})
-
+    if (datetime.datetime.today().weekday() < 5):
+        return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first, 'today_menu':today_menu})
+    else:
+        return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first})
+    
 def delete(request):
     Congression.objects.all().delete()
 
-    if os.path.isfile("iot.csv"):
-        os.remove("iot.csv")
+    if os.path.isfile("../iot.csv"):
+        os.remove("../iot.csv")
 
     return redirect('congression')
 
