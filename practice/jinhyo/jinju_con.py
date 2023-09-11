@@ -26,7 +26,7 @@ new_group = False
 i = -1 # number of current abstracted_group
 astate = 0 # to remember the previou gradient of the graph > inout
 previous_result = 0 # to avoid writing same result
-ans = 0 # congression
+ans = 0 # congestion
 
 def getTimeValue(time) : # getting sum of hour/min/sec as seconds
     (h,m,s) = time.split(":")

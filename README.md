@@ -53,7 +53,7 @@
 <br/>
 
 3. 실행(최상단 폴더에 있다는 전제하에 터미널에 입력)
-- python congression.py
+- python congestion.py
 <br/>
 
 4. 센서 작동 종료시: Ctrl + c

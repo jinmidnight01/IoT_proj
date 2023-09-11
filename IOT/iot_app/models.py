@@ -5,7 +5,7 @@ from django.utils import timezone
 
 # Create your models here.
 
-class Congression(models.Model):
+class Congestion(models.Model):
     num = models.IntegerField(default=1)
     created_at = models.DateTimeField(default=timezone.now())
 

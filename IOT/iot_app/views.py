@@ -16,7 +16,7 @@ import matplotlib.ticker as mticker
 def home(request):
     return render(request, 'home.html')
 
-def congression(request):
+def congestion(request):
 
     # 실시간 혼잡도
     if os.path.isfile("../iot.csv"):
@@ -34,10 +34,10 @@ def congression(request):
             lst.append(float(info[1]))
         
         try:            
-            iot = Congression(num = lst[-1], created_at = t[-1])
+            iot = Congestion(num = lst[-1], created_at = t[-1])
             iot.save()
         except:
-            iot = Congression(num = 0, created_at = str(datetime.datetime.now()))
+            iot = Congestion(num = 0, created_at = str(datetime.datetime.now()))
             iot.save()
 
         f.close()
@@ -96,7 +96,7 @@ def congression(request):
                     sum = 0
         
         fig, ax = plt.subplots()
-        ax.plot(x, y, linewidth = 5, label="Congression", color="#A278F4")
+        ax.plot(x, y, linewidth = 5, label="Congestion", color="#A278F4")
         
         plt.xlabel('')
         plt.ylabel('')
@@ -116,7 +116,7 @@ def congression(request):
         plt.savefig('static/'+str(datetime.datetime.now().year)+str(datetime.datetime.now().month)+str(datetime.datetime.now().day)+'.png')
 
     # 객체 생성
-    iot_first = Congression.objects.all().order_by('-created_at').first()
+    iot_first = Congestion.objects.all().order_by('-created_at').first()
     Eat.objects.create(eat_count=0).save()
     eat_first = Eat.objects.all().first()
     Eat.objects.all().delete()
@@ -124,17 +124,17 @@ def congression(request):
     today_menu = Menu.objects.all().last()
 
     if (datetime.datetime.today().weekday() < 5):
-        return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first, 'today_menu':today_menu})
+        return render(request, 'congestion.html', {'iot_first':iot_first, 'eat_first':eat_first, 'today_menu':today_menu})
     else:
-        return render(request, 'congression.html', {'iot_first':iot_first, 'eat_first':eat_first})
+        return render(request, 'congestion.html', {'iot_first':iot_first, 'eat_first':eat_first})
     
 def delete(request):
-    Congression.objects.all().delete()
+    Congestion.objects.all().delete()
 
     if os.path.isfile("../iot.csv"):
         os.remove("../iot.csv")
 
-    return redirect('congression')
+    return redirect('congestion')
 
 def kaist(request):
     return render(request, 'kaist.html')
@@ -147,14 +147,14 @@ def eat_plus(request):
     first.eat_count += 1
     first.flag = False
     first.save()
-    return redirect('congression')
+    return redirect('congestion')
 
 def eat_minus(request): 
     first = Eat.objects.all().first()
     first.eat_count -= 1
     first.flag = True
     first.save()
-    return redirect('congression')
+    return redirect('congestion')
 
     
     
